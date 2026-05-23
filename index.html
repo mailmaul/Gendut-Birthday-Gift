@@ -148,6 +148,7 @@
       align-items: center;
       margin-bottom: 40px;
       animation: float 3s ease-in-out infinite;
+      transform-origin: center center;
     }
     #landing-view .envelope-wrapper::before {
       content: '💌';
@@ -197,11 +198,14 @@
       z-index: 25; 
       top: 0;
       left: 0;
-      pointer-events: none;
+      pointer-events: auto;
+      cursor: pointer;
       display: flex;
       justify-content: center;
       align-items: center;
-      transition: border 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+      transition: border 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, opacity 0.1s ease;
+      user-select: none;
+      transform-origin: center center; /* Memastikan bubble membesar seimbang dari tengah */
     }
 
     /* Style variants toggleable by page status */
@@ -268,6 +272,143 @@
       60% { transform: translateY(-10px); }
     }
 
+    /* --- ENVELOPE ZOOM-IN ANIMATION (Opening) --- */
+    @keyframes envelopeZoomIn {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: scale(10);
+        opacity: 0;
+      }
+    }
+
+    .envelope-wrapper.zoom-in {
+      animation: envelopeZoomIn 1.5s ease-in forwards !important;
+    }
+
+    /* --- STORY PAGE ZOOM-IN ENTRANCE ANIMATION --- */
+    @keyframes storyEntranceZoomIn {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .view.entrance-zoom-in {
+      animation: storyEntranceZoomIn 0.6s ease-out forwards !important;
+    }
+
+    /* --- ENVELOPE ZOOM-OUT ANIMATION (Page Transition) --- */
+    @keyframes envelopeZoomOut {
+      0% {
+        transform: scale(1.5);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(0);
+        opacity: 0;
+      }
+    }
+
+    .envelope-wrapper.zoom-out {
+      animation: envelopeZoomOut 0.5s ease-in forwards;
+    }
+
+    /* --- SCREEN OPENING FROM 4 SIDES (IRIS EFFECT - CLOSING) --- */
+    @keyframes screenOpenTop {
+      0% { height: 0; top: 0; }
+      100% { height: 50%; top: 0; }
+    }
+
+    @keyframes screenOpenBottom {
+      0% { height: 0; bottom: 0; }
+      100% { height: 50%; bottom: 0; }
+    }
+
+    @keyframes screenOpenLeft {
+      0% { width: 0; left: 0; }
+      100% { width: 50%; left: 0; }
+    }
+
+    @keyframes screenOpenRight {
+      0% { width: 0; right: 0; }
+      100% { width: 50%; right: 0; }
+    }
+
+    /* --- SCREEN OPENING FROM 4 SIDES (IRIS EFFECT - REVERSED/OPENING) --- */
+    @keyframes screenOpenTopReverse {
+      0% { height: 50%; top: 0; }
+      100% { height: 0; top: 0; }
+    }
+
+    @keyframes screenOpenBottomReverse {
+      0% { height: 50%; bottom: 0; }
+      100% { height: 0; bottom: 0; }
+    }
+
+    @keyframes screenOpenLeftReverse {
+      0% { width: 50%; left: 0; }
+      100% { width: 0; left: 0; }
+    }
+
+    @keyframes screenOpenRightReverse {
+      0% { width: 50%; right: 0; }
+      100% { width: 0; right: 0; }
+    }
+
+    .screen-overlay-top-reverse {
+      position: fixed;
+      background: linear-gradient(135deg, var(--pink), var(--lavender));
+      z-index: 100;
+      animation: screenOpenTopReverse 0.6s ease-out 0.1s forwards;
+      height: 50%;
+      width: 100%;
+      top: 0;
+      left: 0;
+    }
+
+    .screen-overlay-bottom-reverse {
+      position: fixed;
+      background: linear-gradient(135deg, var(--lavender), var(--blue));
+      z-index: 100;
+      animation: screenOpenBottomReverse 0.6s ease-out 0.1s forwards;
+      height: 50%;
+      width: 100%;
+      bottom: 0;
+      left: 0;
+    }
+
+    .screen-overlay-left-reverse {
+      position: fixed;
+      background: linear-gradient(135deg, var(--blue), var(--pink));
+      z-index: 100;
+      animation: screenOpenLeftReverse 0.6s ease-out 0.1s forwards;
+      width: 50%;
+      height: 100%;
+      left: 0;
+      top: 0;
+    }
+
+    .screen-overlay-right-reverse {
+      position: fixed;
+      background: linear-gradient(135deg, var(--yellow), var(--lavender));
+      z-index: 100;
+      animation: screenOpenRightReverse 0.6s ease-out 0.1s forwards;
+      width: 50%;
+      height: 100%;
+      right: 0;
+      top: 0;
+    }
+
   </style>
 </head>
 <body>
@@ -284,10 +425,10 @@
     <!-- Background Hearts -->
     <div class="bg-hearts" id="hearts-container"></div>
 
-    <!-- Global Interactive Floating Floating Objects -->
-    <div id="bubble-1" class="bubble bubble-1 is-heart">💝</div>
-    <div id="bubble-2" class="bubble bubble-2 is-heart">💝</div>
-    <div id="bubble-3" class="bubble bubble-3 is-heart">💝</div>
+    <!-- Global Interactive Floating Objects -->
+    <div id="bubble-1" class="bubble bubble-1 is-heart" onclick="popBubble(this)" onpointerenter="hoverBubble(this)" onpointerleave="unhoverBubble(this)">💝</div>
+    <div id="bubble-2" class="bubble bubble-2 is-heart" onclick="popBubble(this)" onpointerenter="hoverBubble(this)" onpointerleave="unhoverBubble(this)">💝</div>
+    <div id="bubble-3" class="bubble bubble-3 is-heart" onclick="popBubble(this)" onpointerenter="hoverBubble(this)" onpointerleave="unhoverBubble(this)">💝</div>
 
     <!-- 1. LANDING PAGE -->
     <div id="landing-view" class="view active">
@@ -378,13 +519,14 @@
         });
       });
 
-      // Start the physics loops for landing page (Hearts start floating randomly right away!)
       initBubbleMovement();
     };
 
     let currentStep = 0;
     const music = document.getElementById("bg-music");
     let isMusicPlaying = false;
+    let bubbleTimers = {};
+    let currentPositions = {}; // Menyimpan koordinat terakhir x & y bubble agar stabil saat di-hover
 
     /* --- PARTICLE GENERATOR (HEARTS) --- */
     function createHearts() {
@@ -404,7 +546,7 @@
     }
     createHearts();
 
-    /* --- HIGH PERFORMANCE REAL-TIME RANDOM OBJECT ANIMATION --- */
+    /* --- RANDOM OBJECT ANIMATION ENGINE --- */
     function initBubbleMovement() {
       const bubbles = document.querySelectorAll('.bubble');
       bubbles.forEach(bubble => {
@@ -414,7 +556,10 @@
 
     function animateBubbleRandomly(bubble) {
       const appFrame = document.getElementById('app');
-      if (!appFrame) return;
+      if (!appFrame || bubble.style.opacity === "0" || bubble.dataset.hovered === "true") return;
+
+      const id = bubble.id;
+      if (bubbleTimers[id]) clearTimeout(bubbleTimers[id]);
 
       const boundsX = appFrame.clientWidth - bubble.clientWidth;
       const boundsY = appFrame.clientHeight - bubble.clientHeight;
@@ -422,12 +567,97 @@
       const nextX = Math.random() * boundsX;
       const nextY = Math.random() * boundsY;
 
+      // Catat posisi target
+      currentPositions[id] = { x: nextX, y: nextY };
+
       const moveDuration = Math.random() * 2000 + 2000; 
 
-      bubble.style.transition = `transform ${moveDuration}ms ease-in-out`;
-      bubble.style.transform = `translate(${nextX}px, ${nextY}px)`;
+      bubble.style.transition = `transform ${moveDuration}ms ease-in-out, opacity 0.2s ease`;
+      bubble.style.transform = `translate(${nextX}px, ${nextY}px) scale(1)`;
 
-      setTimeout(() => animateBubbleRandomly(bubble), moveDuration);
+      bubbleTimers[id] = setTimeout(() => animateBubbleRandomly(bubble), moveDuration);
+    }
+
+    /* --- HOVER FUNCTIONS (STOP & GROW 30%) --- */
+    function hoverBubble(element) {
+      if (element.style.opacity === "0") return;
+      
+      element.dataset.hovered = "true";
+      const id = element.id;
+      if (bubbleTimers[id]) clearTimeout(bubbleTimers[id]);
+
+      // Ambil posisi realtime saat pointer masuk agar bubble berhenti persis di tempatnya
+      const style = window.getComputedStyle(element);
+      const matrix = new WebKitCSSMatrix(style.transform);
+      const currentX = matrix.m41;
+      const currentY = matrix.m42;
+
+      // Simpan koordinat saat ini
+      currentPositions[id] = { x: currentX, y: currentY };
+
+      // Stop animasi jalan & Besarkan ukuran 30% (scale 1.3)
+      element.style.transition = 'transform 0.1s ease';
+      element.style.transform = `translate(${currentX}px, ${currentY}px) scale(1.3)`;
+    }
+
+    function unhoverBubble(element) {
+      if (element.style.opacity === "0") return;
+
+      element.dataset.hovered = "false";
+      const id = element.id;
+
+      // Kembalikan ke scale normal lalu lanjutkan pergerakan acak baru
+      element.style.transition = 'transform 0.3s ease';
+      element.style.transform = `translate(${currentPositions[id].x}px, ${currentPositions[id].y}px) scale(1)`;
+      
+      // Berikan jeda sedikit sebelum memulai pergerakan baru agar transisi smooth
+      setTimeout(() => {
+        if (element.dataset.hovered !== "true") {
+          animateBubbleRandomly(element);
+        }
+      }, 300);
+    }
+
+    /* --- FUNGSI MEMECAHKAN BUBBLE (POP & REGENERATE) --- */
+    function popBubble(element) {
+      if (element.style.opacity === "0") return;
+      
+      clickSfx.currentTime = 0;
+      clickSfx.play();
+
+      const rect = element.getBoundingClientRect();
+      confetti({
+        particleCount: 15,
+        spread: 40,
+        origin: {
+          x: (rect.left + rect.width / 2) / window.innerWidth,
+          y: (rect.top + rect.height / 2) / window.innerHeight
+        },
+        colors: ['#ff9fb2', '#fff5c2', '#d4f0ff']
+      });
+
+      element.style.opacity = "0";
+      element.style.pointerEvents = "none";
+      element.dataset.hovered = "false";
+
+      setTimeout(() => {
+        const appFrame = document.getElementById('app');
+        const boundsX = appFrame.clientWidth - element.clientWidth;
+        const boundsY = appFrame.clientHeight - element.clientHeight;
+        
+        const randomX = Math.random() * boundsX;
+        const randomY = Math.random() * boundsY;
+
+        element.style.transition = 'none';
+        element.style.transform = `translate(${randomX}px, ${randomY}px) scale(1)`;
+        currentPositions[element.id] = { x: randomX, y: randomY };
+
+        setTimeout(() => {
+          element.style.opacity = "1";
+          element.style.pointerEvents = "auto";
+          animateBubbleRandomly(element);
+        }, 500);
+      }, 400);
     }
 
     /* --- MUSIC CONTROLS --- */
@@ -449,32 +679,69 @@
       clickSfx.play();
     }
 
-    function switchView(fromId, toId) {
-      document.getElementById(fromId).classList.remove('active');
-      setTimeout(() => {
-        document.getElementById(toId).classList.add('active');
-      }, 400); 
+    function switchView(fromId, toId, useScreenOpening = false, hasEntranceAnimation = false) {
+      if (useScreenOpening) {
+        let overlayTop = document.createElement('div');
+        let overlayBottom = document.createElement('div');
+        let overlayLeft = document.createElement('div');
+        let overlayRight = document.createElement('div');
+
+        overlayTop.className = 'screen-overlay-top-reverse';
+        overlayBottom.className = 'screen-overlay-bottom-reverse';
+        overlayLeft.className = 'screen-overlay-left-reverse';
+        overlayRight.className = 'screen-overlay-right-reverse';
+
+        document.body.appendChild(overlayTop);
+        document.body.appendChild(overlayBottom);
+        document.body.appendChild(overlayLeft);
+        document.body.appendChild(overlayRight);
+
+        document.getElementById(fromId).classList.remove('active');
+        
+        const toView = document.getElementById(toId);
+        toView.classList.add('active');
+        if (hasEntranceAnimation) {
+          toView.classList.add('entrance-zoom-in');
+        }
+
+        setTimeout(() => {
+          overlayTop.remove();
+          overlayBottom.remove();
+          overlayLeft.remove();
+          overlayRight.remove();
+        }, 1000);
+      } else {
+        document.getElementById(fromId).classList.remove('active');
+        setTimeout(() => {
+          document.getElementById(toId).classList.add('active');
+        }, 400);
+      }
     }
 
     function startExperience() {
       playClick();
       if(!isMusicPlaying) toggleMusic();
       
-      // Transform 3D Heart items into image element tags instantly
-      const b1 = document.getElementById('bubble-1');
-      const b2 = document.getElementById('bubble-2');
-      const b3 = document.getElementById('bubble-3');
+      const envelopeWrapper = document.querySelector('.envelope-wrapper');
+      envelopeWrapper.style.animation = 'none'; 
+      envelopeWrapper.classList.add('zoom-in');
 
-      b1.className = "bubble bubble-1 is-photo";
-      b2.className = "bubble bubble-2 is-photo";
-      b3.className = "bubble bubble-3 is-photo";
+      setTimeout(() => {
+        const b1 = document.getElementById('bubble-1');
+        const b2 = document.getElementById('bubble-2');
+        const b3 = document.getElementById('bubble-3');
 
-      b1.innerHTML = `<img src="${storyData[0].bubbles[0]}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
-      b2.innerHTML = `<img src="${storyData[0].bubbles[1]}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
-      b3.innerHTML = `<img src="${storyData[0].bubbles[2]}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
+        b1.className = "bubble bubble-1 is-photo";
+        b2.className = "bubble bubble-2 is-photo";
+        b3.className = "bubble bubble-3 is-photo";
 
-      updateStoryDOM();
-      switchView('landing-view', 'story-view');
+        b1.innerHTML = `<img src="${storyData[0].bubbles[0]}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
+        b2.innerHTML = `<img src="${storyData[0].bubbles[1]}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
+        b3.innerHTML = `<img src="${storyData[0].bubbles[2]}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
+
+        updateStoryDOM();
+        switchView('landing-view', 'story-view', true, true);
+      }, 1400); 
     }
 
     function updateStoryDOM() {
@@ -482,7 +749,6 @@
       
       document.getElementById('main-img').src = data.mainImg;
       
-      // Update target photos inside floating tracks seamlessly
       if (currentStep > 0) {
         document.getElementById('bubble-1').querySelector('img').src = data.bubbles[0];
         document.getElementById('bubble-2').querySelector('img').src = data.bubbles[1];
@@ -505,22 +771,51 @@
     }
 
     function nextStory() {
-      playClick();
-      if (currentStep < storyData.length - 1) {
-        currentStep++;
-        updateStoryDOM();
-      } else {
-        // Turning bubbles back into celebratory 3D elements for the grand finale
-        document.getElementById('bubble-1').className = "bubble bubble-1 is-heart";
-        document.getElementById('bubble-2').className = "bubble bubble-2 is-heart";
-        document.getElementById('bubble-3').className = "bubble bubble-3 is-heart";
-        document.getElementById('bubble-1').innerHTML = "🥳";
-        document.getElementById('bubble-2').innerHTML = "🎉";
-        document.getElementById('bubble-3').innerHTML = "💖";
+      const b1 = document.getElementById('bubble-1');
+      const b2 = document.getElementById('bubble-2');
+      const b3 = document.getElementById('bubble-3');
+      
+      popBubble(b1);
+      popBubble(b2);
+      popBubble(b3);
 
-        switchView('story-view', 'final-view');
-        confetti({ particleCount: 50, spread: 60, origin: { y: 0.8 }, colors: ['#ffdae0', '#e6e6fa'] });
-      }
+      const storyView = document.getElementById('story-view');
+      storyView.classList.remove('entrance-zoom-in');
+      
+      const tempEnvelope = document.createElement('div');
+      tempEnvelope.className = 'envelope-wrapper zoom-out';
+      tempEnvelope.style.position = 'fixed';
+      tempEnvelope.style.top = '50%';
+      tempEnvelope.style.left = '50%';
+      tempEnvelope.style.transform = 'translate(-50%, -50%) scale(1.5)';
+      tempEnvelope.style.zIndex = '200';
+      tempEnvelope.style.pointerEvents = 'none';
+      tempEnvelope.style.margin = '0';
+      tempEnvelope.style.width = '200px';
+      tempEnvelope.style.height = '150px';
+      document.body.appendChild(tempEnvelope);
+      
+      storyView.classList.add('fade-out');
+      
+      setTimeout(() => {
+        tempEnvelope.remove();
+        
+        if (currentStep < storyData.length - 1) {
+          currentStep++;
+          storyView.classList.remove('fade-out');
+          updateStoryDOM();
+        } else {
+          b1.className = "bubble bubble-1 is-heart";
+          b2.className = "bubble bubble-2 is-heart";
+          b3.className = "bubble bubble-3 is-heart";
+          b1.innerHTML = "🥳";
+          b2.innerHTML = "🎉";
+          b3.innerHTML = "💖";
+
+          switchView('story-view', 'final-view');
+          confetti({ particleCount: 50, spread: 60, origin: { y: 0.8 }, colors: ['#ffdae0', '#e6e6fa'] });
+        }
+      }, 500);
     }
 
     /* --- CELEBRATION EFFECTS --- */
