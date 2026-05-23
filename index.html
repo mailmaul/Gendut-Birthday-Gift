@@ -181,12 +181,30 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.15);
       border: 5px solid white;
       z-index: 5;
-      animation: gentlePulse 4s infinite alternate;
     }
 
-    @keyframes gentlePulse {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.03); }
+    /* --- ENTRANCE BOUNCE ANIMATION FOR COMPONENTS --- */
+    @keyframes componentBounce {
+      0% {
+        transform: scale(0.3);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.08);
+        opacity: 0.8;
+      }
+      70% {
+        transform: scale(0.95);
+        opacity: 0.9;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .bounce-element {
+      animation: componentBounce 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
     }
 
     /* Floating Bubbles & 3D Hearts Engine Container */
@@ -205,7 +223,7 @@
       align-items: center;
       transition: border 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, opacity 0.1s ease;
       user-select: none;
-      transform-origin: center center; /* Memastikan bubble membesar seimbang dari tengah */
+      transform-origin: center center;
     }
 
     /* Style variants toggleable by page status */
@@ -526,7 +544,7 @@
     const music = document.getElementById("bg-music");
     let isMusicPlaying = false;
     let bubbleTimers = {};
-    let currentPositions = {}; // Menyimpan koordinat terakhir x & y bubble agar stabil saat di-hover
+    let currentPositions = {}; 
 
     /* --- PARTICLE GENERATOR (HEARTS) --- */
     function createHearts() {
@@ -567,7 +585,6 @@
       const nextX = Math.random() * boundsX;
       const nextY = Math.random() * boundsY;
 
-      // Catat posisi target
       currentPositions[id] = { x: nextX, y: nextY };
 
       const moveDuration = Math.random() * 2000 + 2000; 
@@ -586,16 +603,13 @@
       const id = element.id;
       if (bubbleTimers[id]) clearTimeout(bubbleTimers[id]);
 
-      // Ambil posisi realtime saat pointer masuk agar bubble berhenti persis di tempatnya
       const style = window.getComputedStyle(element);
       const matrix = new WebKitCSSMatrix(style.transform);
       const currentX = matrix.m41;
       const currentY = matrix.m42;
 
-      // Simpan koordinat saat ini
       currentPositions[id] = { x: currentX, y: currentY };
 
-      // Stop animasi jalan & Besarkan ukuran 30% (scale 1.3)
       element.style.transition = 'transform 0.1s ease';
       element.style.transform = `translate(${currentX}px, ${currentY}px) scale(1.3)`;
     }
@@ -606,11 +620,9 @@
       element.dataset.hovered = "false";
       const id = element.id;
 
-      // Kembalikan ke scale normal lalu lanjutkan pergerakan acak baru
       element.style.transition = 'transform 0.3s ease';
       element.style.transform = `translate(${currentPositions[id].x}px, ${currentPositions[id].y}px) scale(1)`;
       
-      // Berikan jeda sedikit sebelum memulai pergerakan baru agar transisi smooth
       setTimeout(() => {
         if (element.dataset.hovered !== "true") {
           animateBubbleRandomly(element);
@@ -747,15 +759,30 @@
     function updateStoryDOM() {
       const data = storyData[currentStep];
       
-      document.getElementById('main-img').src = data.mainImg;
+      const mainImgElement = document.getElementById('main-img');
+      const storyTextElement = document.getElementById('story-text');
+
+      // Hapus class bounce terlebih dahulu agar animasi bisa dipicu ulang
+      mainImgElement.classList.remove('bounce-element');
+      storyTextElement.classList.remove('bounce-element');
+
+      // Set data konten baru
+      mainImgElement.src = data.mainImg;
+      storyTextElement.innerHTML = `<p>${data.text}</p>`;
+      
+      // Memicu reflow browser agar CSS mengenali penghapusan class sebelum dipasang kembali
+      void mainImgElement.offsetWidth;
+      void storyTextElement.offsetWidth;
+
+      // Tambahkan class bounce untuk memicu animasi memantul
+      mainImgElement.classList.add('bounce-element');
+      storyTextElement.classList.add('bounce-element');
       
       if (currentStep > 0) {
         document.getElementById('bubble-1').querySelector('img').src = data.bubbles[0];
         document.getElementById('bubble-2').querySelector('img').src = data.bubbles[1];
         document.getElementById('bubble-3').querySelector('img').src = data.bubbles[2];
       }
-      
-      document.getElementById('story-text').innerHTML = `<p>${data.text}</p>`;
       
       const dots = document.querySelectorAll('.step-dot');
       dots.forEach((dot, index) => {
