@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Happy 27th Birthday, Akmalita! 💖</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+  
+  <style>
+    /* --- COLOR PALETTE & VARIABLES --- */
+    :root {
+      --pink: #ffdae0;
+      --lavender: #e6e6fa;
+      --blue: #d4f0ff;
+      --yellow: #fff5c2;
+      --text-dark: #5a4b5e;
+      --primary-btn: #ff9fb2;
+      --primary-btn-hover: #ff849b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background-color: var(--pink);
+      color: var(--text-dark);
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Mobile-first App Container (Optimized for iPhone 13 dimensions) */
+    #app {
+      width: 100%;
+      max-width: 390px;
+      height: 100%;
+      max-height: 844px;
+      background: linear-gradient(135deg, var(--pink), var(--lavender), var(--blue));
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* --- FLOATING HEARTS BACKGROUND --- */
+    .bg-hearts {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .heart-particle {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 1.2rem;
+      animation: floatUp 8s linear infinite;
+      bottom: -10%;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* --- COMMON UI ELEMENTS --- */
+    .view {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.95);
+      padding: 20px;
+    }
+    .view.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+
+    h1, h2 { font-family: 'Pacifico', cursive; font-weight: normal; text-align: center; }
+    
+    button {
+      background-color: var(--primary-btn);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 30px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 159, 178, 0.5);
+      transition: transform 0.2s, background-color 0.2s;
+      z-index: 40;
+    }
+    button:active { transform: scale(0.95); }
+
+    /* Music Toggle */
+    #music-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255,255,255,0.7);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2rem;
+      z-index: 50;
+      padding: 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    /* --- LANDING PAGE --- */
+    #landing-view .envelope-wrapper {
+      position: relative;
+      width: 200px;
+      height: 150px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 40px;
+      animation: float 3s ease-in-out infinite;
+    }
+    #landing-view .envelope-wrapper::before {
+      content: '💌';
+      font-size: 4rem;
+    }
+    #landing-view h1 { margin-bottom: 10px; color: #ff6b81; }
+    #landing-view p { font-size: 1.1rem; margin-bottom: 30px; }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    /* --- STORY PAGES --- */
+    .story-container {
+      position: relative;
+      width: 100%;
+      height: 70%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .main-image {
+      width: 220px;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      border: 5px solid white;
+      z-index: 5;
+      animation: gentlePulse 4s infinite alternate;
+    }
+
+    @keyframes gentlePulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.03); }
+    }
+
+    /* Floating Bubbles & 3D Hearts Engine Container */
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+      z-index: 25; 
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: border 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    }
+
+    /* Style variants toggleable by page status */
+    .bubble.is-heart {
+      border: none !important;
+      box-shadow: none !important;
+      background: transparent !important;
+    }
+    .bubble.is-photo {
+      border: 3px solid white;
+      background: white;
+    }
+
+    .bubble-1 { width: 75px; height: 75px; }
+    .bubble-2 { width: 95px; height: 95px; }
+    .bubble-3 { width: 65px; height: 65px; }
+
+    .story-text {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      margin-top: 30px;
+      font-size: 1.05rem;
+      line-height: 1.5;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      width: 90%;
+      z-index: 10;
+    }
+
+    .btn-container {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      padding: 0 20px;
+      margin-top: 20px;
+    }
+
+    /* Stepper Dots */
+    .stepper {
+      display: flex;
+      gap: 8px;
+      margin-top: 15px;
+      z-index: 10;
+    }
+    .step-dot {
+      width: 10px; height: 10px;
+      background-color: rgba(255, 159, 178, 0.3);
+      border-radius: 50%;
+      transition: background-color 0.3s;
+    }
+    .step-dot.active { background-color: var(--primary-btn); }
+
+    /* --- FINAL PAGE --- */
+    #final-view { text-align: center; }
+    #final-view h1 { font-size: 2.8rem; color: #ff6b81; margin-bottom: 10px; line-height: 1.2; }
+    #final-view p { font-size: 1.2rem; margin-bottom: 30px; font-weight: bold; }
+    .cake-icon { font-size: 5rem; animation: bounce 2s infinite; margin-bottom: 20px; }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-20px); }
+      60% { transform: translateY(-10px); }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Background Music -->
+  <audio id="bg-music" loop>
+    <source src="https://sinar-utama.com/storage/barang/music_gendut/gendut_music.mp3" type="audio/mpeg">
+  </audio>
+
+  <div id="app">
+    <!-- Music Toggle -->
+    <button id="music-toggle" onclick="toggleMusic()">🎵</button>
+
+    <!-- Background Hearts -->
+    <div class="bg-hearts" id="hearts-container"></div>
+
+    <!-- Global Interactive Floating Floating Objects -->
+    <div id="bubble-1" class="bubble bubble-1 is-heart">💝</div>
+    <div id="bubble-2" class="bubble bubble-2 is-heart">💝</div>
+    <div id="bubble-3" class="bubble bubble-3 is-heart">💝</div>
+
+    <!-- 1. LANDING PAGE -->
+    <div id="landing-view" class="view active">
+      <div class="envelope-wrapper"></div>
+      <h1>Akmalita Rosyida</h1>
+      <p>A special letter for you...</p>
+      <button onclick="startExperience()">Open Invitation 💌</button>
+    </div>
+
+    <!-- 2. STORY PAGES -->
+    <div id="story-view" class="view">
+      <div class="story-container">
+        <img id="main-img" class="main-image" src="" alt="Main">
+        <div class="story-text" id="story-text"></div>
+      </div>
+      
+      <div class="stepper" id="stepper-dots">
+        <div class="step-dot active"></div>
+        <div class="step-dot"></div>
+        <div class="step-dot"></div>
+        <div class="step-dot"></div>
+        <div class="step-dot"></div>
+      </div>
+
+      <div class="btn-container">
+        <button id="next-btn" onclick="nextStory()">Next ✨</button>
+      </div>
+    </div>
+
+    <!-- 3. FINAL PAGE -->
+    <div id="final-view" class="view">
+      <div class="cake-icon">🎂</div>
+      <h1>Happy 27th Birthday!</h1>
+      <p>Akmalita Rosyida<br>28 May 2026</p>
+      <div class="story-text" style="margin-top: 0; margin-bottom: 30px;">
+        May this year bring you as much joy, love, and beautiful moments as you bring into the lives of everyone around you. You are endlessly loved! 💖
+      </div>
+      <button onclick="triggerExplosion()">Celebrate! 🎉</button>
+    </div>
+
+  </div>
+
+  <script>
+    /* --- SOUND EFFECTS --- */
+    const clickSfx = new Audio("https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1539c.mp3?filename=pop-39222.mp3");
+    const yaySfx = new Audio("https://cdn.pixabay.com/download/audio/2021/08/09/audio_1ab7088b9e.mp3?filename=kids-saying-yay-113125.mp3");
+
+    /* --- DATA: STORY STEPS --- */
+    const storyData = [
+      {
+        mainImg: "https://drive.google.com/thumbnail?id=1lnq7P05bsj0qRCWAHTlFbqnyB3BACxkT",
+        bubbles: ["https://drive.google.com/thumbnail?id=1eGAqLhlqE6ua7OQeC6Y6oLe-r6cWgbIs", "https://drive.google.com/thumbnail?id=11t6K5x1nl_q8hfnbRFf7uj4dnQeawqwS", "https://drive.google.com/thumbnail?id=1R_OZeoIbtXNpKAU-I2OmbPhb-L-gyz2l"],
+        text: "Every great story starts with a beautiful beginning. Today, we celebrate the day you graced the world with your presence."
+      },
+      {
+        mainImg: "https://drive.google.com/thumbnail?id=1WZnjHEn3W9cCUaf3EP19HK7bEkq2fYCz",
+        bubbles: ["https://drive.google.com/thumbnail?id=1uBw5s9j-qJyslXkhClR9CksmJq_a45yL", "https://drive.google.com/thumbnail?id=15SaeCVowr_CGiZHi3AwaNFcNluf7yAWX", "https://drive.google.com/thumbnail?id=1acEBqYzvLZ0fiX1NHW5A7dX5x_uBFDsu"],
+        text: "Your smile has the power to light up even the gloomiest of days. It's truly your superpower."
+      },
+      {
+        mainImg: "https://drive.google.com/thumbnail?id=1HsdlY5kqcxNw64jmFvcOLvpuYwbBUulA",
+        bubbles: ["https://drive.google.com/thumbnail?id=1T0iYTGpQX-FPG50bgZn8nHLSGneFdyfX", "https://drive.google.com/thumbnail?id=1iZj4w5LC5BwhsrQING0mqZMYW7Gfm80o", "https://drive.google.com/thumbnail?id=1vN8QkHpA2djjHbyNsU_n1jq68n_bBqky"],
+        text: "We've shared so many tiny, perfect moments. From the unexpected laughs to the quiet, peaceful evenings."
+      },
+      {
+        mainImg: "https://drive.google.com/thumbnail?id=1UBa_EvHSQ7hqddDvDD1AFUkwz7ZqG3Q3",
+        bubbles: ["https://drive.google.com/thumbnail?id=1lbiE-yQRbowjnCAvpVxS_Y2cHAyG6Zmn", "https://drive.google.com/thumbnail?id=1c6KDQS8Gu4rPPLObhModHJ-RW6FV4038", "https://drive.google.com/thumbnail?id=15jK1wWJ029YDKVFxifuyuwo_XpeX8VGD"],
+        text: "As you turn 27, look at how far you've come. You are growing more beautiful, strong, and amazing every single day."
+      },
+      {
+        mainImg: "https://drive.google.com/thumbnail?id=1lqNpqZ5QBMplded0kAJuJVIfLG31zkIr",
+        bubbles: ["https://drive.google.com/thumbnail?id=1Jn0soVi_lKE-FphgBzy3kDL2YrygIvjm", "https://drive.google.com/thumbnail?id=1ruc9EMj76N_wl3qL4LWtWWtdP-w8ApPe", "https://drive.google.com/thumbnail?id=1EGNbXlp1gTGMnRcZXpOYfPl2AHubFrdm"],
+        text: "Are you ready to see what's waiting for you on the other side of this page? I promise, it's something special..."
+      }
+    ];
+
+    /* --- IMAGE PRELOADER --- */
+    const preloadedImages = [];
+    window.onload = () => {
+      storyData.forEach(data => {
+        const img = new Image();
+        img.src = data.mainImg;
+        preloadedImages.push(img);
+        data.bubbles.forEach(bSrc => {
+          const bImg = new Image();
+          bImg.src = bSrc;
+          preloadedImages.push(bImg);
+        });
+      });
+
+      // Start the physics loops for landing page (Hearts start floating randomly right away!)
+      initBubbleMovement();
+    };
+
+    let currentStep = 0;
+    const music = document.getElementById("bg-music");
+    let isMusicPlaying = false;
+
+    /* --- PARTICLE GENERATOR (HEARTS) --- */
+    function createHearts() {
+      const container = document.getElementById('hearts-container');
+      const hearts = ['🤍', '✨', '🌸', '💖'];
+      setInterval(() => {
+        const heart = document.createElement('div');
+        heart.classList.add('heart-particle');
+        heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+        heart.style.fontSize = (Math.random() * 1 + 0.8) + 'rem';
+        container.appendChild(heart);
+        
+        setTimeout(() => { heart.remove(); }, 10000);
+      }, 800);
+    }
+    createHearts();
+
+    /* --- HIGH PERFORMANCE REAL-TIME RANDOM OBJECT ANIMATION --- */
+    function initBubbleMovement() {
+      const bubbles = document.querySelectorAll('.bubble');
+      bubbles.forEach(bubble => {
+        animateBubbleRandomly(bubble);
+      });
+    }
+
+    function animateBubbleRandomly(bubble) {
+      const appFrame = document.getElementById('app');
+      if (!appFrame) return;
+
+      const boundsX = appFrame.clientWidth - bubble.clientWidth;
+      const boundsY = appFrame.clientHeight - bubble.clientHeight;
+
+      const nextX = Math.random() * boundsX;
+      const nextY = Math.random() * boundsY;
+
+      const moveDuration = Math.random() * 2000 + 2000; 
+
+      bubble.style.transition = `transform ${moveDuration}ms ease-in-out`;
+      bubble.style.transform = `translate(${nextX}px, ${nextY}px)`;
+
+      setTimeout(() => animateBubbleRandomly(bubble), moveDuration);
+    }
+
+    /* --- MUSIC CONTROLS --- */
+    function toggleMusic() {
+      const btn = document.getElementById("music-toggle");
+      if (isMusicPlaying) {
+        music.pause();
+        btn.innerText = "🔇";
+      } else {
+        music.play();
+        btn.innerText = "🎵";
+      }
+      isMusicPlaying = !isMusicPlaying;
+    }
+
+    /* --- NAVIGATION & DOM ENGINE --- */
+    function playClick() {
+      clickSfx.currentTime = 0;
+      clickSfx.play();
+    }
+
+    function switchView(fromId, toId) {
+      document.getElementById(fromId).classList.remove('active');
+      setTimeout(() => {
+        document.getElementById(toId).classList.add('active');
+      }, 400); 
+    }
+
+    function startExperience() {
+      playClick();
+      if(!isMusicPlaying) toggleMusic();
+      
+      // Transform 3D Heart items into image element tags instantly
+      const b1 = document.getElementById('bubble-1');
+      const b2 = document.getElementById('bubble-2');
+      const b3 = document.getElementById('bubble-3');
+
+      b1.className = "bubble bubble-1 is-photo";
+      b2.className = "bubble bubble-2 is-photo";
+      b3.className = "bubble bubble-3 is-photo";
+
+      b1.innerHTML = `<img src="${storyData[0].bubbles[0]}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
+      b2.innerHTML = `<img src="${storyData[0].bubbles[1]}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
+      b3.innerHTML = `<img src="${storyData[0].bubbles[2]}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
+
+      updateStoryDOM();
+      switchView('landing-view', 'story-view');
+    }
+
+    function updateStoryDOM() {
+      const data = storyData[currentStep];
+      
+      document.getElementById('main-img').src = data.mainImg;
+      
+      // Update target photos inside floating tracks seamlessly
+      if (currentStep > 0) {
+        document.getElementById('bubble-1').querySelector('img').src = data.bubbles[0];
+        document.getElementById('bubble-2').querySelector('img').src = data.bubbles[1];
+        document.getElementById('bubble-3').querySelector('img').src = data.bubbles[2];
+      }
+      
+      document.getElementById('story-text').innerHTML = `<p>${data.text}</p>`;
+      
+      const dots = document.querySelectorAll('.step-dot');
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentStep);
+      });
+
+      const btn = document.getElementById('next-btn');
+      if (currentStep === storyData.length - 1) {
+        btn.innerText = "Finish 🎁";
+      } else {
+        btn.innerText = "Next ✨";
+      }
+    }
+
+    function nextStory() {
+      playClick();
+      if (currentStep < storyData.length - 1) {
+        currentStep++;
+        updateStoryDOM();
+      } else {
+        // Turning bubbles back into celebratory 3D elements for the grand finale
+        document.getElementById('bubble-1').className = "bubble bubble-1 is-heart";
+        document.getElementById('bubble-2').className = "bubble bubble-2 is-heart";
+        document.getElementById('bubble-3').className = "bubble bubble-3 is-heart";
+        document.getElementById('bubble-1').innerHTML = "🥳";
+        document.getElementById('bubble-2').innerHTML = "🎉";
+        document.getElementById('bubble-3').innerHTML = "💖";
+
+        switchView('story-view', 'final-view');
+        confetti({ particleCount: 50, spread: 60, origin: { y: 0.8 }, colors: ['#ffdae0', '#e6e6fa'] });
+      }
+    }
+
+    /* --- CELEBRATION EFFECTS --- */
+    function triggerExplosion() {
+      yaySfx.currentTime = 0;
+      yaySfx.play();
+
+      var duration = 4000;
+      var end = Date.now() + duration;
+
+      (function frame() {
+        confetti({
+          particleCount: 6,
+          angle: 60,
+          spread: 60,
+          origin: { x: 0 },
+          colors: ['#ffdae0', '#e6e6fa', '#d4f0ff', '#fff5c2', '#ff9fb2']
+        });
+        confetti({
+          particleCount: 6,
+          angle: 120,
+          spread: 60,
+          origin: { x: 1 },
+          colors: ['#ffdae0', '#e6e6fa', '#d4f0ff', '#fff5c2', '#ff9fb2']
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      }());
+    }
+  </script>
+</body>
+</html>
