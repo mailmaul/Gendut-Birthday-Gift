@@ -117,7 +117,22 @@
     }
     button:active { transform: scale(0.95); }
 
-    /* Music Toggle */
+    /* --- CELEBRATE BUTTON SPECIFIC LOGIC --- */
+    #celebrate-btn {
+      position: relative;
+      z-index: 100;
+    }
+    
+    #celebrate-btn:hover {
+      transform: scale(1.5);
+      background-color: var(--primary-btn-hover);
+    }
+
+    #celebrate-btn:active {
+      transform: scale(1.4);
+    }
+
+    /* Music Toggle Positioned Top Right */
     #music-toggle {
       position: absolute;
       top: 20px;
@@ -133,6 +148,25 @@
       z-index: 50;
       padding: 0;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    /* Reset Button Positioned Top Left on Last Page */
+    #reset-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(255,255,255,0.75);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2rem;
+      z-index: 110; /* Higher than bubbles container to remain clickable */
+      padding: 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      color: var(--text-dark);
     }
 
     /* --- LANDING PAGE --- */
@@ -284,6 +318,42 @@
     #final-view p { font-size: 1.2rem; margin-bottom: 30px; font-weight: bold; }
     .cake-icon { font-size: 5rem; animation: bounce 2s infinite; margin-bottom: 20px; }
     
+    /* Celebration Bubbles Grid */
+    #celebration-bubbles-container {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      width: 100%;
+      max-width: 350px;
+      margin: 0 auto 20px auto;
+      padding: 0 10px;
+    }
+
+    .celebration-bubble {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid white;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+      object-fit: cover;
+      animation: floatBounce 0.6s ease-out forwards;
+    }
+
+    @keyframes floatBounce {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.1);
+        opacity: 0.9;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+    
     @keyframes bounce {
       0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
       40% { transform: translateY(-20px); }
@@ -322,7 +392,7 @@
     }
 
     .view.entrance-zoom-in {
-      animation: storyEntranceZoomIn 0.6s ease-out forwards !important;
+      animation: storyEntranceZoomIn 2s ease-out forwards !important;
     }
 
     /* --- ENVELOPE ZOOM-OUT ANIMATION (Page Transition) --- */
@@ -339,27 +409,6 @@
 
     .envelope-wrapper.zoom-out {
       animation: envelopeZoomOut 0.5s ease-in forwards;
-    }
-
-    /* --- SCREEN OPENING FROM 4 SIDES (IRIS EFFECT - CLOSING) --- */
-    @keyframes screenOpenTop {
-      0% { height: 0; top: 0; }
-      100% { height: 50%; top: 0; }
-    }
-
-    @keyframes screenOpenBottom {
-      0% { height: 0; bottom: 0; }
-      100% { height: 50%; bottom: 0; }
-    }
-
-    @keyframes screenOpenLeft {
-      0% { width: 0; left: 0; }
-      100% { width: 50%; left: 0; }
-    }
-
-    @keyframes screenOpenRight {
-      0% { width: 0; right: 0; }
-      100% { width: 50%; right: 0; }
     }
 
     /* --- SCREEN OPENING FROM 4 SIDES (IRIS EFFECT - REVERSED/OPENING) --- */
@@ -387,7 +436,7 @@
       position: fixed;
       background: linear-gradient(135deg, var(--pink), var(--lavender));
       z-index: 100;
-      animation: screenOpenTopReverse 0.6s ease-out 0.1s forwards;
+      animation: screenOpenTopReverse 2s ease-out 0.1s forwards;
       height: 50%;
       width: 100%;
       top: 0;
@@ -398,7 +447,7 @@
       position: fixed;
       background: linear-gradient(135deg, var(--lavender), var(--blue));
       z-index: 100;
-      animation: screenOpenBottomReverse 0.6s ease-out 0.1s forwards;
+      animation: screenOpenBottomReverse 2s ease-out 0.1s forwards;
       height: 50%;
       width: 100%;
       bottom: 0;
@@ -409,7 +458,7 @@
       position: fixed;
       background: linear-gradient(135deg, var(--blue), var(--pink));
       z-index: 100;
-      animation: screenOpenLeftReverse 0.6s ease-out 0.1s forwards;
+      animation: screenOpenLeftReverse 2s ease-out 0.1s forwards;
       width: 50%;
       height: 100%;
       left: 0;
@@ -420,7 +469,7 @@
       position: fixed;
       background: linear-gradient(135deg, var(--yellow), var(--lavender));
       z-index: 100;
-      animation: screenOpenRightReverse 0.6s ease-out 0.1s forwards;
+      animation: screenOpenRightReverse 2s ease-out 0.1s forwards;
       width: 50%;
       height: 100%;
       right: 0;
@@ -478,13 +527,17 @@
 
     <!-- 3. FINAL PAGE -->
     <div id="final-view" class="view">
+      <!-- Reset button placed inside final-view at top left -->
+      <button id="reset-btn" onclick="resetExperience()">🔄</button>
+      
       <div class="cake-icon">🎂</div>
       <h1>Happy 27th Birthday!</h1>
       <p>Akmalita Rosyida<br>28 May 2026</p>
       <div class="story-text" style="margin-top: 0; margin-bottom: 30px;">
         May this year bring you as much joy, love, and beautiful moments as you bring into the lives of everyone around you. You are endlessly loved! 💖
       </div>
-      <button onclick="triggerExplosion()">Celebrate! 🎉</button>
+      <div id="celebration-bubbles-container"></div>
+      <button id="celebrate-btn" onclick="triggerExplosion()">Celebrate! 🎉</button>
     </div>
 
   </div>
@@ -492,7 +545,9 @@
   <script>
     /* --- SOUND EFFECTS --- */
     const clickSfx = new Audio("https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1539c.mp3?filename=pop-39222.mp3");
+    const bubblePopSfx = new Audio("https://cdn.pixabay.com/download/audio/2025/09/18/audio_37de472eec.mp3?filename=dragon-studio-bubble-pop-406640.mp3");
     const yaySfx = new Audio("https://cdn.pixabay.com/download/audio/2021/08/09/audio_1ab7088b9e.mp3?filename=kids-saying-yay-113125.mp3");
+    const gendutSfx = new Audio("https://sinar-utama.com/storage/barang/music_gendut/gendut.mp3");
 
     /* --- DATA: STORY STEPS --- */
     const storyData = [
@@ -634,8 +689,8 @@
     function popBubble(element) {
       if (element.style.opacity === "0") return;
       
-      clickSfx.currentTime = 0;
-      clickSfx.play();
+      bubblePopSfx.currentTime = 0;
+      bubblePopSfx.play();
 
       const rect = element.getBoundingClientRect();
       confetti({
@@ -762,19 +817,15 @@
       const mainImgElement = document.getElementById('main-img');
       const storyTextElement = document.getElementById('story-text');
 
-      // Hapus class bounce terlebih dahulu agar animasi bisa dipicu ulang
       mainImgElement.classList.remove('bounce-element');
       storyTextElement.classList.remove('bounce-element');
 
-      // Set data konten baru
       mainImgElement.src = data.mainImg;
       storyTextElement.innerHTML = `<p>${data.text}</p>`;
       
-      // Memicu reflow browser agar CSS mengenali penghapusan class sebelum dipasang kembali
       void mainImgElement.offsetWidth;
       void storyTextElement.offsetWidth;
 
-      // Tambahkan class bounce untuk memicu animasi memantul
       mainImgElement.classList.add('bounce-element');
       storyTextElement.classList.add('bounce-element');
       
@@ -805,6 +856,8 @@
       popBubble(b1);
       popBubble(b2);
       popBubble(b3);
+      clickSfx.currentTime = 0;
+      clickSfx.play();
 
       const storyView = document.getElementById('story-view');
       storyView.classList.remove('entrance-zoom-in');
@@ -835,9 +888,8 @@
           b1.className = "bubble bubble-1 is-heart";
           b2.className = "bubble bubble-2 is-heart";
           b3.className = "bubble bubble-3 is-heart";
-          b1.innerHTML = "🥳";
-          b2.innerHTML = "🎉";
-          b3.innerHTML = "💖";
+
+          createFloatingCelebrationBubbles();
 
           switchView('story-view', 'final-view');
           confetti({ particleCount: 50, spread: 60, origin: { y: 0.8 }, colors: ['#ffdae0', '#e6e6fa'] });
@@ -845,10 +897,103 @@
       }, 500);
     }
 
+    // Create 15 floating celebration bubbles with interactive behavior
+    function createFloatingCelebrationBubbles() {
+      const existing = document.getElementById('celebration-floating-container');
+      if (existing) existing.remove();
+
+      const app = document.getElementById('app');
+      const container = document.createElement('div');
+      container.id = 'celebration-floating-container';
+      container.style.position = 'absolute';
+      container.style.top = '0';
+      container.style.left = '0';
+      container.style.width = '100%';
+      container.style.height = '100%';
+      container.style.pointerEvents = 'none'; 
+      container.style.zIndex = '30';
+      app.appendChild(container);
+
+      const allSources = [];
+      storyData.forEach(step => {
+        if (Array.isArray(step.bubbles)) step.bubbles.forEach(s => allSources.push(s));
+      });
+
+      allSources.forEach((src, idx) => {
+        const div = document.createElement('div');
+        div.className = 'bubble is-photo';
+        const sizeClass = ['bubble-1','bubble-2','bubble-3'][idx % 3];
+        div.classList.add(sizeClass);
+        div.id = 'celebration-' + idx;
+        div.innerHTML = `<img src="${src}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
+        div.onclick = function() { popBubble(div); };
+        div.onpointerenter = function() { hoverBubble(div); };
+        div.onpointerleave = function() { unhoverBubble(div); };
+
+        div.style.opacity = '0';
+        container.appendChild(div);
+
+        setTimeout(() => {
+          const appFrame = document.getElementById('app');
+          const boundsX = Math.max(0, appFrame.clientWidth - div.clientWidth);
+          const boundsY = Math.max(0, appFrame.clientHeight - div.clientHeight);
+          const randX = Math.random() * boundsX;
+          const randY = Math.random() * boundsY;
+          div.style.transition = 'transform 600ms ease, opacity 300ms ease';
+          div.style.transform = `translate(${randX}px, ${randY}px) scale(1)`;
+          div.style.opacity = '1';
+          setTimeout(() => animateBubbleRandomly(div), idx * 80);
+        }, 50);
+      });
+    }
+
+    /* --- RESET EXPERIENCE FUNCTION --- */
+    function resetExperience() {
+      playClick();
+      
+      // Remove the 15 celebration bubbles container
+      const celebrationContainer = document.getElementById('celebration-floating-container');
+      if (celebrationContainer) celebrationContainer.remove();
+
+      // Clear any custom text styling or grid contents inside the last page if needed
+      document.getElementById('celebration-bubbles-container').innerHTML = '';
+
+      // Reset application timeline states
+      currentStep = 0;
+
+      // Bring back standard heart shapes to global bubbles
+      const b1 = document.getElementById('bubble-1');
+      const b2 = document.getElementById('bubble-2');
+      const b3 = document.getElementById('bubble-3');
+      
+      b1.className = "bubble bubble-1 is-heart";
+      b2.className = "bubble bubble-2 is-heart";
+      b3.className = "bubble bubble-3 is-heart";
+      b1.innerText = "💝";
+      b2.innerText = "💝";
+      b3.innerText = "💝";
+
+      // Restore envelope visual state
+      const envelopeWrapper = document.querySelector('.envelope-wrapper');
+      envelopeWrapper.classList.remove('zoom-in');
+      envelopeWrapper.style.animation = 'float 3s ease-in-out infinite';
+
+      // Reset music volume back to baseline
+      music.volume = 1;
+
+      // Remove fading or entrance animation helpers from screens
+      document.getElementById('story-view').classList.remove('fade-out', 'entrance-zoom-in');
+      
+      // Return cleanly back to the home view
+      switchView('final-view', 'landing-view');
+    }
+
     /* --- CELEBRATION EFFECTS --- */
     function triggerExplosion() {
-      yaySfx.currentTime = 0;
-      yaySfx.play();
+      gendutSfx.currentTime = 0;
+      gendutSfx.play();
+
+      music.volume = 0.1;
 
       var duration = 4000;
       var end = Date.now() + duration;
@@ -873,6 +1018,10 @@
           requestAnimationFrame(frame);
         }
       }());
+
+      setTimeout(() => {
+        music.volume = 1;
+      }, duration + 200);
     }
   </script>
 </body>
