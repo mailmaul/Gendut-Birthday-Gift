@@ -99,6 +99,8 @@
       pointer-events: none;
       transform: scale(0.95);
       padding: 20px;
+      overflow-y: auto;
+      overflow-x: hidden;
     }
     .view.active {
       opacity: 1;
@@ -207,11 +209,12 @@
     .story-container {
       position: relative;
       width: 100%;
-      height: 70%;
+      height: auto;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
     }
     
     .main-image {
@@ -222,6 +225,7 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.15);
       border: 5px solid white;
       z-index: 5;
+      flex-shrink: 0;
     }
 
     /* --- ENTRANCE BOUNCE ANIMATION FOR COMPONENTS --- */
@@ -288,12 +292,14 @@
       border-radius: 15px;
       text-align: center;
       margin-top: 30px;
+      margin-bottom: 0;
       font-size: 1.05rem;
       line-height: 1.5;
       backdrop-filter: blur(5px);
       box-shadow: 0 5px 15px rgba(0,0,0,0.05);
       width: 90%;
       z-index: 10;
+      flex-shrink: 0;
     }
 
     .btn-container {
@@ -301,15 +307,20 @@
       display: flex;
       justify-content: flex-end;
       padding: 0 20px;
-      margin-top: 20px;
+      margin-top: 0;
+      flex-shrink: 0;
     }
 
     /* Stepper Dots */
     .stepper {
       display: flex;
       gap: 8px;
-      margin-top: 15px;
+      margin-top: 40px;
+      margin-bottom: 40px;
       z-index: 10;
+      flex-shrink: 0;
+      justify-content: center;
+      width: 100%;
     }
     .step-dot {
       width: 10px; height: 10px;
@@ -320,10 +331,20 @@
     .step-dot.active { background-color: var(--primary-btn); }
 
     /* --- FINAL PAGE --- */
-    #final-view { text-align: center; }
-    #final-view h1 { font-size: 2.8rem; color: #ff6b81; margin-bottom: 10px; line-height: 1.2; }
-    #final-view p { font-size: 1.2rem; margin-bottom: 30px; font-weight: bold; }
-    .cake-icon { font-size: 5rem; animation: bounce 2s infinite; margin-bottom: 20px; }
+    #final-view { 
+      text-align: center; 
+      justify-content: flex-start;
+      padding-top: 60px;
+    }
+    
+    #story-view {
+      justify-content: flex-start;
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+    #final-view h1 { font-size: 2.8rem; color: #ff6b81; margin-bottom: 10px; line-height: 1.2; flex-shrink: 0; }
+    #final-view p { font-size: 1.2rem; margin-bottom: 30px; font-weight: bold; flex-shrink: 0; }
+    .cake-icon { font-size: 5rem; animation: bounce 2s infinite; margin-bottom: 20px; flex-shrink: 0; }
     
     /* Celebration Bubbles Grid */
     #celebration-bubbles-container {
@@ -334,6 +355,7 @@
       max-width: 350px;
       margin: 0 auto 20px auto;
       padding: 0 10px;
+      flex-shrink: 0;
     }
 
     .celebration-bubble {
