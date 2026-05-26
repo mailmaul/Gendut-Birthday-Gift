@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Happy 27th Birthday, Akmalita! 💖</title>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Pacifico&family=Caveat:wght@700&display=swap"
+    rel="stylesheet">
 
-   <!-- Open Graph Meta -->
+  <!-- Open Graph Meta -->
   <meta property="og:title" content="Happy 27th Birthday Akmalita 🎉" />
   <meta property="og:description" content="A special surprise birthday 💖" />
   <meta property="og:image" content="https://drive.google.com/thumbnail?id=1HsdlY5kqcxNw64jmFvcOLvpuYwbBUulA" />
   <meta property="og:url" content="https://mailmaul.github.io/Gendut-Birthday-27/" />
   <meta property="og:type" content="website" />
-  
+
   <style>
     /* --- COLOR PALETTE & VARIABLES --- */
     :root {
@@ -24,6 +27,7 @@
       --text-dark: #5a4b5e;
       --primary-btn: #ff9fb2;
       --primary-btn-hover: #ff849b;
+      --soft-white: rgba(255, 255, 255, 0.88);
     }
 
     * {
@@ -54,7 +58,7 @@
       background-size: 400% 400%;
       animation: gradientBG 15s ease infinite;
       position: relative;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -69,10 +73,14 @@
     /* --- FLOATING HEARTS BACKGROUND --- */
     .bg-hearts {
       position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       pointer-events: none;
       z-index: 0;
     }
+
     .heart-particle {
       position: absolute;
       color: rgba(255, 255, 255, 0.6);
@@ -80,6 +88,7 @@
       animation: floatUp 8s linear infinite;
       bottom: -10%;
     }
+
     @keyframes floatUp {
       0% { transform: translateY(0) rotate(0deg); opacity: 1; }
       100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
@@ -88,7 +97,10 @@
     /* --- COMMON UI ELEMENTS --- */
     .view {
       position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -102,43 +114,62 @@
       overflow-y: auto;
       overflow-x: hidden;
     }
+
     .view.active {
       opacity: 1;
       pointer-events: auto;
       transform: scale(1);
     }
 
-    h1, h2 { font-family: 'Pacifico', cursive; font-weight: normal; text-align: center; }
-    
+    h1, h2 {
+      font-family: 'Pacifico', cursive;
+      font-weight: normal;
+      text-align: center;
+    }
+
     button {
       background-color: var(--primary-btn);
       color: white;
       border: none;
-      padding: 15px 30px;
+      padding: 14px 28px;
       border-radius: 30px;
       font-family: 'Nunito', sans-serif;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(255, 159, 178, 0.5);
-      transition: transform 0.2s, background-color 0.2s;
+      box-shadow: 0 4px 15px rgba(255, 159, 178, 0.4);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       z-index: 40;
     }
-    button:active { transform: scale(0.95); }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    button:disabled {
+      background-color: #ccaeb4 !important;
+      box-shadow: none !important;
+      cursor: not-allowed;
+      opacity: 0.6;
+      transform: none !important;
+    }
+
+    /* --- GAYA WARNA INACTIVE SEMENTARA TETAP BISA DIKLIK --- */
+    .btn-inactive {
+      background-color: #ccaeb4 !important;
+      box-shadow: none !important;
+      opacity: 0.8;
+    }
 
     /* --- CELEBRATE BUTTON SPECIFIC LOGIC --- */
     #celebrate-btn {
       position: relative;
       z-index: 100;
     }
-    
-    #celebrate-btn:hover {
-      transform: scale(1.5);
-      background-color: var(--primary-btn-hover);
-    }
 
-    #celebrate-btn:active {
-      transform: scale(1.4);
+    #celebrate-btn:not(.btn-inactive):hover {
+      transform: scale(1.1);
+      background-color: var(--primary-btn-hover);
     }
 
     /* Music Toggle Positioned Top Right */
@@ -146,7 +177,7 @@
       position: absolute;
       top: 20px;
       right: 20px;
-      background: rgba(255,255,255,0.7);
+      background: rgba(255, 255, 255, 0.75);
       border-radius: 50%;
       width: 40px;
       height: 40px;
@@ -156,7 +187,8 @@
       font-size: 1.2rem;
       z-index: 50;
       padding: 0;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.5);
     }
 
     /* Reset Button Positioned Top Left on Last Page */
@@ -164,7 +196,7 @@
       position: absolute;
       top: 20px;
       left: 20px;
-      background: rgba(255,255,255,0.75);
+      background: rgba(255, 255, 255, 0.75);
       border-radius: 50%;
       width: 40px;
       height: 40px;
@@ -172,37 +204,51 @@
       justify-content: center;
       align-items: center;
       font-size: 1.2rem;
-      z-index: 110; /* Higher than bubbles container to remain clickable */
+      z-index: 110;
       padding: 0;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       color: var(--text-dark);
+      border: 1px solid rgba(255, 255, 255, 0.5);
     }
 
     /* --- LANDING PAGE --- */
     #landing-view .envelope-wrapper {
       position: relative;
-      width: 200px;
-      height: 150px;
+      width: 180px;
+      height: 140px;
       background: #fff;
       border-radius: 10px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      box-shadow: 0 10px 25px rgba(255, 159, 178, 0.3);
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
       animation: float 3s ease-in-out infinite;
       transform-origin: center center;
     }
+
     #landing-view .envelope-wrapper::before {
       content: '💌';
       font-size: 4rem;
     }
-    #landing-view h1 { margin-bottom: 10px; color: #ff6b81; }
-    #landing-view p { font-size: 1.1rem; margin-bottom: 30px; }
-    
+
+    #landing-view h1 {
+      margin-bottom: 8px;
+      color: #ff6b81;
+      font-size: 2.2rem;
+      text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
+    }
+
+    #landing-view p {
+      font-size: 1.05rem;
+      margin-bottom: 25px;
+      line-height: 1.4;
+      color: #6b5b7b;
+    }
+
     @keyframes float {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
+      50% { transform: translateY(-12px); }
     }
 
     /* --- STORY PAGES --- */
@@ -216,36 +262,41 @@
       justify-content: center;
       flex-shrink: 0;
     }
-    
-    .main-image {
-      width: 220px;
-      height: 220px;
-      object-fit: cover;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-      border: 5px solid white;
+
+    /* Elegant Polaroid Frame Effect */
+    .polaroid-frame {
+      background: white;
+      padding: 12px 12px 25px 12px;
+      border-radius: 4px;
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+      transform: rotate(-2deg);
+      transition: transform 0.4s;
       z-index: 5;
-      flex-shrink: 0;
+    }
+
+    .polaroid-frame::after {
+      content: '✨ Bahagia Terus Dut ✨';
+      display: block;
+      text-align: center;
+      font-family: 'Caveat', cursive;
+      font-size: 1.1rem;
+      color: #a89bb0;
+      margin-top: 8px;
+    }
+
+    .main-image {
+      width: 210px;
+      height: 210px;
+      object-fit: cover;
+      border-radius: 2px;
     }
 
     /* --- ENTRANCE BOUNCE ANIMATION FOR COMPONENTS --- */
     @keyframes componentBounce {
-      0% {
-        transform: scale(0.3);
-        opacity: 0;
-      }
-      50% {
-        transform: scale(1.08);
-        opacity: 0.8;
-      }
-      70% {
-        transform: scale(0.95);
-        opacity: 0.9;
-      }
-      100% {
-        transform: scale(1);
-        opacity: 1;
-      }
+      0% { transform: scale(0.3); opacity: 0; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+      70% { transform: scale(0.98); opacity: 0.9; }
+      100% { transform: scale(1); opacity: 1; }
     }
 
     .bounce-element {
@@ -257,8 +308,8 @@
       position: absolute;
       border-radius: 50%;
       object-fit: cover;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-      z-index: 25; 
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      z-index: 25;
       top: 0;
       left: 0;
       pointer-events: auto;
@@ -271,15 +322,18 @@
       transform-origin: center center;
     }
 
-    /* Style variants toggleable by page status */
     .bubble.is-heart {
       border: none !important;
       box-shadow: none !important;
       background: transparent !important;
+      font-size: 1.8rem;
+      filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.1));
     }
+
     .bubble.is-photo {
       border: 3px solid white;
       background: white;
+      box-shadow: 0 6px 12px rgba(255, 159, 178, 0.3);
     }
 
     .bubble-1 { width: 75px; height: 75px; }
@@ -287,19 +341,34 @@
     .bubble-3 { width: 65px; height: 65px; }
 
     .story-text {
-      background: rgba(255, 255, 255, 0.85);
-      padding: 20px;
-      border-radius: 15px;
+      background: var(--soft-white);
+      padding: 18px 22px;
+      border-radius: 20px;
       text-align: center;
-      margin-top: 30px;
+      margin-top: 25px;
       margin-bottom: 0;
-      font-size: 1.05rem;
-      line-height: 1.5;
-      backdrop-filter: blur(5px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-      width: 90%;
+      font-size: 1rem;
+      line-height: 1.6;
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 8px 20px rgba(255, 159, 178, 0.1);
+      width: 92%;
       z-index: 10;
       flex-shrink: 0;
+      min-height: 80px;
+      display: block;
+    }
+
+    /* --- FADE IN CHARACTER ANIMATION (FIXED HORIZONTAL) --- */
+    .fade-char {
+      opacity: 0;
+      animation: letterFadeIn 0.4s ease forwards;
+      display: inline;
+      white-space: pre-wrap;
+    }
+
+    @keyframes letterFadeIn {
+      to { opacity: 1; }
     }
 
     .btn-container {
@@ -307,7 +376,7 @@
       display: flex;
       justify-content: flex-end;
       padding: 0 20px;
-      margin-top: 0;
+      margin-top: 5px;
       flex-shrink: 0;
     }
 
@@ -315,37 +384,149 @@
     .stepper {
       display: flex;
       gap: 8px;
-      margin-top: 40px;
-      margin-bottom: 40px;
+      margin-top: 25px;
+      margin-bottom: 20px;
       z-index: 10;
       flex-shrink: 0;
       justify-content: center;
       width: 100%;
     }
+
     .step-dot {
-      width: 10px; height: 10px;
+      width: 8px;
+      height: 8px;
       background-color: rgba(255, 159, 178, 0.3);
       border-radius: 50%;
-      transition: background-color 0.3s;
+      transition: all 0.3s;
     }
-    .step-dot.active { background-color: var(--primary-btn); }
+
+    .step-dot.active {
+      background-color: var(--primary-btn);
+      transform: scale(1.3);
+    }
 
     /* --- FINAL PAGE --- */
-    #final-view { 
-      text-align: center; 
+    #final-view {
+      text-align: center;
       justify-content: flex-start;
       padding-top: 60px;
     }
-    
+
     #story-view {
       justify-content: flex-start;
-      padding-top: 40px;
-      padding-bottom: 40px;
+      padding-top: 50px;
+      padding-bottom: 30px;
     }
-    #final-view h1 { font-size: 2.8rem; color: #ff6b81; margin-bottom: 10px; line-height: 1.2; flex-shrink: 0; }
-    #final-view p { font-size: 1.2rem; margin-bottom: 30px; font-weight: bold; flex-shrink: 0; }
-    .cake-icon { font-size: 5rem; animation: bounce 2s infinite; margin-bottom: 20px; flex-shrink: 0; }
-    
+
+    #final-view h1 {
+      font-size: 2.3rem;
+      color: #ff6b81;
+      margin-bottom: 5px;
+      line-height: 1.2;
+      flex-shrink: 0;
+    }
+
+    #final-view p {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      font-weight: bold;
+      color: #7f6480;
+      flex-shrink: 0;
+    }
+
+    .cake-icon {
+      font-size: 4.5rem;
+      animation: bounce 2s infinite;
+      margin-bottom: 15px;
+      flex-shrink: 0;
+      filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.05));
+    }
+
+    /* Interactive Love Checklist Widget */
+    .love-widget {
+      background: white;
+      width: 92%;
+      padding: 15px;
+      border-radius: 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04);
+      border: 1px dashed var(--primary-btn);
+      text-align: left;
+    }
+
+    .widget-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #a89bb0;
+      font-weight: bold;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+      color: var(--text-dark);
+    }
+
+    .checkbox-item input {
+      accent-color: var(--primary-btn);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    /* --- CUSTOM POPUP MODAL --- */
+    .popup-overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(90, 75, 94, 0.4);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .popup-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .popup-box {
+      background: white;
+      width: 82%;
+      max-width: 320px;
+      padding: 24px;
+      border-radius: 24px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      border: 2px solid var(--pink);
+      transform: scale(0.8);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .popup-overlay.show .popup-box {
+      transform: scale(1);
+    }
+    .popup-box p {
+      font-size: 1.05rem;
+      font-weight: bold;
+      color: var(--text-dark);
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+    .popup-box button {
+      padding: 10px 24px;
+      font-size: 0.95rem;
+    }
+
     /* Celebration Bubbles Grid */
     #celebration-bubbles-container {
       display: grid;
@@ -363,45 +544,28 @@
       height: 50px;
       border-radius: 50%;
       border: 2px solid white;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
       object-fit: cover;
       animation: floatBounce 0.6s ease-out forwards;
     }
 
     @keyframes floatBounce {
-      0% {
-        transform: scale(0);
-        opacity: 0;
-      }
-      50% {
-        transform: scale(1.1);
-        opacity: 0.9;
-      }
-      100% {
-        transform: scale(1);
-        opacity: 1;
-      }
+      0% { transform: scale(0); opacity: 0; }
+      50% { transform: scale(1.1); opacity: 0.9; }
+      100% { transform: scale(1); opacity: 1; }
     }
-    
+
     @keyframes bounce {
       0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-20px); }
-      60% { transform: translateY(-10px); }
+      40% { transform: translateY(-15px); }
+      60% { transform: translateY(-7px); }
     }
 
     /* --- ENVELOPE ZOOM-IN ANIMATION (Opening) --- */
     @keyframes envelopeZoomIn {
-      0% {
-        transform: scale(1);
-        opacity: 1;
-      }
-      50% {
-        opacity: 1;
-      }
-      100% {
-        transform: scale(10);
-        opacity: 0;
-      }
+      0% { transform: scale(1); opacity: 1; }
+      50% { opacity: 1; }
+      100% { transform: scale(10); opacity: 0; }
     }
 
     .envelope-wrapper.zoom-in {
@@ -410,14 +574,8 @@
 
     /* --- STORY PAGE ZOOM-IN ENTRANCE ANIMATION --- */
     @keyframes storyEntranceZoomIn {
-      0% {
-        transform: scale(0);
-        opacity: 0;
-      }
-      100% {
-        transform: scale(1);
-        opacity: 1;
-      }
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
     }
 
     .view.entrance-zoom-in {
@@ -426,87 +584,39 @@
 
     /* --- ENVELOPE ZOOM-OUT ANIMATION (Page Transition) --- */
     @keyframes envelopeZoomOut {
-      0% {
-        transform: scale(1.5);
-        opacity: 1;
-      }
-      100% {
-        transform: scale(0);
-        opacity: 0;
-      }
+      0% { transform: scale(1.5); opacity: 1; }
+      100% { transform: scale(0); opacity: 0; }
     }
 
     .envelope-wrapper.zoom-out {
       animation: envelopeZoomOut 0.5s ease-in forwards;
     }
 
-    /* --- SCREEN OPENING FROM 4 SIDES (IRIS EFFECT - REVERSED/OPENING) --- */
-    @keyframes screenOpenTopReverse {
-      0% { height: 50%; top: 0; }
-      100% { height: 0; top: 0; }
-    }
-
-    @keyframes screenOpenBottomReverse {
-      0% { height: 50%; bottom: 0; }
-      100% { height: 0; bottom: 0; }
-    }
-
-    @keyframes screenOpenLeftReverse {
-      0% { width: 50%; left: 0; }
-      100% { width: 0; left: 0; }
-    }
-
-    @keyframes screenOpenRightReverse {
-      0% { width: 50%; right: 0; }
-      100% { width: 0; right: 0; }
-    }
+    /* --- SCREEN OPENING FROM 4 SIDES (IRIS EFFECT) --- */
+    @keyframes screenOpenTopReverse { 0% { height: 50%; top: 0; } 100% { height: 0; top: 0; } }
+    @keyframes screenOpenBottomReverse { 0% { height: 50%; bottom: 0; } 100% { height: 0; bottom: 0; } }
+    @keyframes screenOpenLeftReverse { 0% { width: 50%; left: 0; } 100% { width: 0; left: 0; } }
+    @keyframes screenOpenRightReverse { 0% { width: 50%; right: 0; } 100% { width: 0; right: 0; } }
 
     .screen-overlay-top-reverse {
-      position: fixed;
-      background: linear-gradient(135deg, var(--pink), var(--lavender));
-      z-index: 100;
-      animation: screenOpenTopReverse 2s ease-out 0.1s forwards;
-      height: 50%;
-      width: 100%;
-      top: 0;
-      left: 0;
+      position: fixed; background: linear-gradient(135deg, var(--pink), var(--lavender)); z-index: 100;
+      animation: screenOpenTopReverse 2s ease-out 0.1s forwards; height: 50%; width: 100%; top: 0; left: 0;
     }
-
     .screen-overlay-bottom-reverse {
-      position: fixed;
-      background: linear-gradient(135deg, var(--lavender), var(--blue));
-      z-index: 100;
-      animation: screenOpenBottomReverse 2s ease-out 0.1s forwards;
-      height: 50%;
-      width: 100%;
-      bottom: 0;
-      left: 0;
+      position: fixed; background: linear-gradient(135deg, var(--lavender), var(--blue)); z-index: 100;
+      animation: screenOpenBottomReverse 2s ease-out 0.1s forwards; height: 50%; width: 100%; bottom: 0; left: 0;
     }
-
     .screen-overlay-left-reverse {
-      position: fixed;
-      background: linear-gradient(135deg, var(--blue), var(--pink));
-      z-index: 100;
-      animation: screenOpenLeftReverse 2s ease-out 0.1s forwards;
-      width: 50%;
-      height: 100%;
-      left: 0;
-      top: 0;
+      position: fixed; background: linear-gradient(135deg, var(--blue), var(--pink)); z-index: 100;
+      animation: screenOpenLeftReverse 2s ease-out 0.1s forwards; width: 50%; height: 100%; left: 0; top: 0;
     }
-
     .screen-overlay-right-reverse {
-      position: fixed;
-      background: linear-gradient(135deg, var(--yellow), var(--lavender));
-      z-index: 100;
-      animation: screenOpenRightReverse 2s ease-out 0.1s forwards;
-      width: 50%;
-      height: 100%;
-      right: 0;
-      top: 0;
+      position: fixed; background: linear-gradient(135deg, var(--yellow), var(--lavender)); z-index: 100;
+      animation: screenOpenRightReverse 2s ease-out 0.1s forwards; width: 50%; height: 100%; right: 0; top: 0;
     }
-
   </style>
 </head>
+
 <body>
 
   <!-- Background Music -->
@@ -521,29 +631,41 @@
     <!-- Background Hearts -->
     <div class="bg-hearts" id="hearts-container"></div>
 
+    <!-- Custom Warning Popup Overlay -->
+    <div id="custom-popup" class="popup-overlay">
+      <div class="popup-box">
+        <p>Kontrak bersama gendutnya di isi dulu dong 🥺👉👈</p>
+        <button onclick="closePopup()">Siap Gendut! 🫡</button>
+      </div>
+    </div>
+
     <!-- Global Interactive Floating Objects -->
-    <div id="bubble-1" class="bubble bubble-1 is-heart" onclick="popBubble(this)" onpointerenter="hoverBubble(this)" onpointerleave="unhoverBubble(this)">💝</div>
-    <div id="bubble-2" class="bubble bubble-2 is-heart" onclick="popBubble(this)" onpointerenter="hoverBubble(this)" onpointerleave="unhoverBubble(this)">💝</div>
-    <div id="bubble-3" class="bubble bubble-3 is-heart" onclick="popBubble(this)" onpointerenter="hoverBubble(this)" onpointerleave="unhoverBubble(this)">💝</div>
+    <div id="bubble-1" class="bubble bubble-1 is-heart" onclick="popBubble(this)" onpointerenter="hoverBubble(this)"
+      onpointerleave="unhoverBubble(this)">💖</div>
+    <div id="bubble-2" class="bubble bubble-2 is-heart" onclick="popBubble(this)" onpointerenter="hoverBubble(this)"
+      onpointerleave="unhoverBubble(this)">🌸</div>
+    <div id="bubble-3" class="bubble bubble-3 is-heart" onclick="popBubble(this)" onpointerenter="hoverBubble(this)"
+      onpointerleave="unhoverBubble(this)">✨</div>
 
     <!-- 1. LANDING PAGE -->
     <div id="landing-view" class="view active">
       <div class="envelope-wrapper"></div>
       <h1>Akmalita Rosyida</h1>
-      <p style="white-space: pre-wrap; text-align: center;">
-      Dutt.. 
-      Ada Undangan spesial nih buat kamu...
-      </p>
+      <p style="white-space: pre-wrap; text-align: center;">Dutt..
+        Ada Undangan spesial nih buat kamu...
+        Buka pelan-pelan yaa? ✨</p>
       <button onclick="startExperience()">Open Invitation 💌</button>
     </div>
 
     <!-- 2. STORY PAGES -->
     <div id="story-view" class="view">
       <div class="story-container">
-        <img id="main-img" class="main-image" src="" alt="Main">
+        <div class="polaroid-frame" id="p-frame">
+          <img id="main-img" class="main-image" src="" alt="Main">
+        </div>
         <div class="story-text" id="story-text"></div>
       </div>
-      
+
       <div class="stepper" id="stepper-dots">
         <div class="step-dot active"></div>
         <div class="step-dot"></div>
@@ -553,27 +675,51 @@
       </div>
 
       <div class="btn-container">
-        <button id="next-btn" onclick="nextStory()">Next ✨</button>
+        <button id="next-btn" onclick="nextStory()" disabled>Next ✨</button>
       </div>
     </div>
 
     <!-- 3. FINAL PAGE -->
     <div id="final-view" class="view">
-      <!-- Reset button placed inside final-view at top left -->
       <button id="reset-btn" onclick="resetExperience()">🔄</button>
-      
+
       <div class="cake-icon">🎂</div>
       <h1>Happy 27th Birthday!</h1>
       <p>Akmalita Rosyida<br>28 May 2026</p>
-      <div class="story-text" style="margin-top: 0; margin-bottom: 30px;">
-        Semoga ditahun ini gendut diberi kebaikan yang jauh lebih baik lagi dari tahun-tahun sebelumnya, dan semoga semua impian gendut bisa tercapai dengan cara yang paling indah dan penuh berkah✨
+
+      <!-- Interactive Checklist Widget -->
+      <div class="love-widget">
+        <div class="widget-title">📌 KONTRAK BERSAMA GENDUT :</div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="c1" checked disabled>
+          <label for="c1">Gk Boleh Berlebihan dalam hal apapun 🔥</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="c2" checked disabled>
+          <label for="c2">Wajib Bahagia, hubungan ini gk boleh sedih 🤗</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="c3" onchange="toggleCelebrateBtn()">
+          <label for="c3" style="font-weight: bold; color: #ff6b81; cursor: pointer;">Mau bahagia bareng selamanya? 💕</label>
+        </div>
+      </div>
+
+      <div class="story-text"
+        style="margin-top: 0; margin-bottom: 25px; font-size: 0.95rem; display: block; text-align: center;">
+        Semoga ditahun ini gendut diberi kebaikan yang jauh lebih baik lagi dari tahun-tahun sebelumnya, dan semoga
+        semua impian gendut bisa tercapai dengan cara yang paling indah dan penuh berkah✨
+
         <br><br>
-          <span style="font-size: 14px;">
-            💙Dari Ismail untuk Akmalita Rosyida💙
-          </span>
+
+        <div
+          style="display: block; text-align: right; width: 100%; font-size: 13px; font-weight: bold; color: #ff6b81; margin-top: 10px;">
+          💙 Dari Ismail untuk Akmalita Rosyida 💙
+        </div>
       </div>
       <div id="celebration-bubbles-container"></div>
-      <button id="celebrate-btn" onclick="triggerExplosion()">Celebrate! 🎉</button>
+      
+      <!-- Tombol Celebrate (Atribut disabled dibuang agar bisa menangkap klik kapan pun) -->
+      <button id="celebrate-btn" class="btn-inactive" onclick="handleCelebrateAction()">Celebrate! 🎉</button>
     </div>
 
   </div>
@@ -582,7 +728,6 @@
     /* --- SOUND EFFECTS --- */
     const clickSfx = new Audio("https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1539c.mp3?filename=pop-39222.mp3");
     const bubblePopSfx = new Audio("https://cdn.pixabay.com/download/audio/2025/09/18/audio_37de472eec.mp3?filename=dragon-studio-bubble-pop-406640.mp3");
-    const yaySfx = new Audio("https://cdn.pixabay.com/download/audio/2021/08/09/audio_1ab7088b9e.mp3?filename=kids-saying-yay-113125.mp3");
     const gendutSfx = new Audio("https://sinar-utama.com/storage/barang/music_gendut/gendut.mp3");
 
     /* --- DATA: STORY STEPS --- */
@@ -627,7 +772,6 @@
           preloadedImages.push(bImg);
         });
       });
-
       initBubbleMovement();
     };
 
@@ -635,23 +779,24 @@
     const music = document.getElementById("bg-music");
     let isMusicPlaying = false;
     let bubbleTimers = {};
-    let currentPositions = {}; 
+    let currentPositions = {};
+    let textFadeTimers = [];
 
-    /* --- PARTICLE GENERATOR (HEARTS) --- */
+    /* --- PARTICLE GENERATOR --- */
     function createHearts() {
       const container = document.getElementById('hearts-container');
-      const hearts = ['🤍', '✨', '🌸', '💖'];
+      const hearts = ['🤍', '✨', '🌸', '💖', '🧸', '☁️'];
       setInterval(() => {
         const heart = document.createElement('div');
         heart.classList.add('heart-particle');
         heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
         heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
-        heart.style.fontSize = (Math.random() * 1 + 0.8) + 'rem';
+        heart.style.animationDuration = (Math.random() * 4 + 5) + 's';
+        heart.style.fontSize = (Math.random() * 0.8 + 0.8) + 'rem';
         container.appendChild(heart);
-        
-        setTimeout(() => { heart.remove(); }, 10000);
-      }, 800);
+
+        setTimeout(() => { heart.remove(); }, 9000);
+      }, 700);
     }
     createHearts();
 
@@ -677,8 +822,7 @@
       const nextY = Math.random() * boundsY;
 
       currentPositions[id] = { x: nextX, y: nextY };
-
-      const moveDuration = Math.random() * 2000 + 2000; 
+      const moveDuration = Math.random() * 2500 + 2500;
 
       bubble.style.transition = `transform ${moveDuration}ms ease-in-out, opacity 0.2s ease`;
       bubble.style.transform = `translate(${nextX}px, ${nextY}px) scale(1)`;
@@ -686,70 +830,54 @@
       bubbleTimers[id] = setTimeout(() => animateBubbleRandomly(bubble), moveDuration);
     }
 
-    /* --- HOVER FUNCTIONS (STOP & GROW 30%) --- */
+    /* --- HOVER FUNCTIONS --- */
     function hoverBubble(element) {
       if (element.style.opacity === "0") return;
-      
       element.dataset.hovered = "true";
       const id = element.id;
       if (bubbleTimers[id]) clearTimeout(bubbleTimers[id]);
 
       const style = window.getComputedStyle(element);
       const matrix = new WebKitCSSMatrix(style.transform);
-      const currentX = matrix.m41;
-      const currentY = matrix.m42;
-
-      currentPositions[id] = { x: currentX, y: currentY };
-
-      element.style.transition = 'transform 0.1s ease';
-      element.style.transform = `translate(${currentX}px, ${currentY}px) scale(1.3)`;
+      element.style.transition = 'transform 0.15s ease';
+      element.style.transform = `translate(${matrix.m41}px, ${matrix.m42}px) scale(1.25)`;
     }
 
     function unhoverBubble(element) {
       if (element.style.opacity === "0") return;
-
       element.dataset.hovered = "false";
-      const id = element.id;
-
       element.style.transition = 'transform 0.3s ease';
-      element.style.transform = `translate(${currentPositions[id].x}px, ${currentPositions[id].y}px) scale(1)`;
-      
+      element.style.transform = `translate(${currentPositions[element.id].x}px, ${currentPositions[element.id].y}px) scale(1)`;
+
       setTimeout(() => {
-        if (element.dataset.hovered !== "true") {
-          animateBubbleRandomly(element);
-        }
+        if (element.dataset.hovered !== "true") animateBubbleRandomly(element);
       }, 300);
     }
 
-    /* --- FUNGSI MEMECAHKAN BUBBLE (POP & REGENERATE) --- */
+    /* --- POP BUBBLE ENGINE --- */
     function popBubble(element) {
       if (element.style.opacity === "0") return;
-      
       bubblePopSfx.currentTime = 0;
       bubblePopSfx.play();
 
       const rect = element.getBoundingClientRect();
       confetti({
-        particleCount: 15,
-        spread: 40,
+        particleCount: 12,
+        spread: 35,
         origin: {
           x: (rect.left + rect.width / 2) / window.innerWidth,
           y: (rect.top + rect.height / 2) / window.innerHeight
         },
-        colors: ['#ff9fb2', '#fff5c2', '#d4f0ff']
+        colors: ['#ff9fb2', '#fff5c2', '#e6e6fa']
       });
 
       element.style.opacity = "0";
       element.style.pointerEvents = "none";
-      element.dataset.hovered = "false";
 
       setTimeout(() => {
         const appFrame = document.getElementById('app');
-        const boundsX = appFrame.clientWidth - element.clientWidth;
-        const boundsY = appFrame.clientHeight - element.clientHeight;
-        
-        const randomX = Math.random() * boundsX;
-        const randomY = Math.random() * boundsY;
+        const randomX = Math.random() * (appFrame.clientWidth - element.clientWidth);
+        const randomY = Math.random() * (appFrame.clientHeight - element.clientHeight);
 
         element.style.transition = 'none';
         element.style.transform = `translate(${randomX}px, ${randomY}px) scale(1)`;
@@ -759,7 +887,7 @@
           element.style.opacity = "1";
           element.style.pointerEvents = "auto";
           animateBubbleRandomly(element);
-        }, 500);
+        }, 600);
       }, 400);
     }
 
@@ -776,58 +904,77 @@
       isMusicPlaying = !isMusicPlaying;
     }
 
-    /* --- NAVIGATION & DOM ENGINE --- */
-    function playClick() {
-      clickSfx.currentTime = 0;
-      clickSfx.play();
+    /* --- ADVANCED FADE-IN TEXT ENGINE --- */
+    function fadeInText(targetElement, fullHtmlText, onCompleteCallback) {
+      textFadeTimers.forEach(t => clearTimeout(t));
+      textFadeTimers = [];
+      targetElement.innerHTML = "";
+
+      document.getElementById('next-btn').disabled = true;
+
+      const regex = /(<[^>]+>|[^<])/g;
+      const tokens = fullHtmlText.match(regex) || [];
+      
+      let totalLettersCount = 0;
+
+      tokens.forEach((token) => {
+        if (token.startsWith('<')) {
+          targetElement.innerHTML += token;
+        } else {
+          totalLettersCount++;
+          const span = document.createElement('span');
+          span.className = 'fade-char';
+          span.innerText = token;
+          span.style.animationDelay = `${totalLettersCount * 30}ms`; 
+          targetElement.appendChild(span);
+        }
+      });
+
+      const totalAnimationTime = totalLettersCount * 30 + 400; 
+
+      const completeTimer = setTimeout(() => {
+        document.getElementById('next-btn').disabled = false;
+        if (onCompleteCallback) onCompleteCallback();
+      }, totalAnimationTime);
+
+      textFadeTimers.push(completeTimer);
     }
 
-    function switchView(fromId, toId, useScreenOpening = false, hasEntranceAnimation = false) {
-      if (useScreenOpening) {
-        let overlayTop = document.createElement('div');
-        let overlayBottom = document.createElement('div');
-        let overlayLeft = document.createElement('div');
-        let overlayRight = document.createElement('div');
-
-        overlayTop.className = 'screen-overlay-top-reverse';
-        overlayBottom.className = 'screen-overlay-bottom-reverse';
-        overlayLeft.className = 'screen-overlay-left-reverse';
-        overlayRight.className = 'screen-overlay-right-reverse';
-
-        document.body.appendChild(overlayTop);
-        document.body.appendChild(overlayBottom);
-        document.body.appendChild(overlayLeft);
-        document.body.appendChild(overlayRight);
-
-        document.getElementById(fromId).classList.remove('active');
-        
-        const toView = document.getElementById(toId);
-        toView.classList.add('active');
-        if (hasEntranceAnimation) {
-          toView.classList.add('entrance-zoom-in');
-        }
-
-        setTimeout(() => {
-          overlayTop.remove();
-          overlayBottom.remove();
-          overlayLeft.remove();
-          overlayRight.remove();
-        }, 1000);
+    /* --- NEW CHECKBOX & CELEBRATE ACTION ENGINE --- */
+    function toggleCelebrateBtn() {
+      const isChecked = document.getElementById('c3').checked;
+      const celebrateBtn = document.getElementById('celebrate-btn');
+      
+      if (isChecked) {
+        celebrateBtn.classList.remove('btn-inactive'); // Berubah warna jadi pink aktif
       } else {
-        document.getElementById(fromId).classList.remove('active');
-        setTimeout(() => {
-          document.getElementById(toId).classList.add('active');
-        }, 400);
+        celebrateBtn.classList.add('btn-inactive');    // Kembali berwarna abu pasif
       }
     }
 
-    function startExperience() {
-      playClick();
-      if(!isMusicPlaying) toggleMusic();
+    // Fungsi tunggal pengatur aksi klik tombol celebrate
+    function handleCelebrateAction() {
+      const isChecked = document.getElementById('c3').checked;
       
-      const envelopeWrapper = document.querySelector('.envelope-wrapper');
-      envelopeWrapper.style.animation = 'none'; 
-      envelopeWrapper.classList.add('zoom-in');
+      if (!isChecked) {
+        // Jika belum dicentang, langsung panggil pop-up peringatan lucu
+        document.getElementById('custom-popup').classList.add('show');
+      } else {
+        // Jika sudah dicentang, ledakkan konfeti utama
+        triggerExplosion();
+      }
+    }
+
+    function closePopup() {
+      clickSfx.play();
+      document.getElementById('custom-popup').classList.remove('show');
+    }
+
+    function startExperience() {
+      clickSfx.play();
+      if (!isMusicPlaying) toggleMusic();
+
+      document.querySelector('.envelope-wrapper').classList.add('zoom-in');
 
       setTimeout(() => {
         const b1 = document.getElementById('bubble-1');
@@ -844,96 +991,72 @@
 
         updateStoryDOM();
         switchView('landing-view', 'story-view', true, true);
-      }, 1400); 
+      }, 1400);
     }
 
     function updateStoryDOM() {
       const data = storyData[currentStep];
-      
       const mainImgElement = document.getElementById('main-img');
       const storyTextElement = document.getElementById('story-text');
+      const frame = document.getElementById('p-frame');
+
+      const angles = [-3, -1, 2, 4, -2];
+      frame.style.transform = `rotate(${angles[currentStep % angles.length]}deg)`;
 
       mainImgElement.classList.remove('bounce-element');
-      storyTextElement.classList.remove('bounce-element');
-
       mainImgElement.src = data.mainImg;
-      storyTextElement.innerHTML = `<p>${data.text}</p>`;
-      
-      void mainImgElement.offsetWidth;
-      void storyTextElement.offsetWidth;
 
+      void mainImgElement.offsetWidth;
       mainImgElement.classList.add('bounce-element');
-      storyTextElement.classList.add('bounce-element');
-      
+
+      fadeInText(storyTextElement, data.text);
+
       if (currentStep > 0) {
         document.getElementById('bubble-1').querySelector('img').src = data.bubbles[0];
         document.getElementById('bubble-2').querySelector('img').src = data.bubbles[1];
         document.getElementById('bubble-3').querySelector('img').src = data.bubbles[2];
       }
-      
-      const dots = document.querySelectorAll('.step-dot');
-      dots.forEach((dot, index) => {
+
+      document.querySelectorAll('.step-dot').forEach((dot, index) => {
         dot.classList.toggle('active', index === currentStep);
       });
 
-      const btn = document.getElementById('next-btn');
-      if (currentStep === storyData.length - 1) {
-        btn.innerText = "Finish 🎁";
-      } else {
-        btn.innerText = "Next ✨";
-      }
+      document.getElementById('next-btn').innerText = (currentStep === storyData.length - 1) ? "Finish 🎁" : "Next ✨";
     }
 
     function nextStory() {
-      const b1 = document.getElementById('bubble-1');
-      const b2 = document.getElementById('bubble-2');
-      const b3 = document.getElementById('bubble-3');
-      
-      popBubble(b1);
-      popBubble(b2);
-      popBubble(b3);
       clickSfx.currentTime = 0;
       clickSfx.play();
 
+      popBubble(document.getElementById('bubble-1'));
+      popBubble(document.getElementById('bubble-2'));
+      popBubble(document.getElementById('bubble-3'));
+
       const storyView = document.getElementById('story-view');
       storyView.classList.remove('entrance-zoom-in');
-      
-      const tempEnvelope = document.createElement('div');
-      tempEnvelope.className = 'envelope-wrapper zoom-out';
-      tempEnvelope.style.position = 'fixed';
-      tempEnvelope.style.top = '50%';
-      tempEnvelope.style.left = '50%';
-      tempEnvelope.style.transform = 'translate(-50%, -50%) scale(1.5)';
-      tempEnvelope.style.zIndex = '200';
-      tempEnvelope.style.pointerEvents = 'none';
-      tempEnvelope.style.margin = '0';
-      tempEnvelope.style.width = '200px';
-      tempEnvelope.style.height = '150px';
-      document.body.appendChild(tempEnvelope);
-      
       storyView.classList.add('fade-out');
-      
+
       setTimeout(() => {
-        tempEnvelope.remove();
-        
         if (currentStep < storyData.length - 1) {
           currentStep++;
           storyView.classList.remove('fade-out');
           updateStoryDOM();
         } else {
-          b1.className = "bubble bubble-1 is-heart";
-          b2.className = "bubble bubble-2 is-heart";
-          b3.className = "bubble bubble-3 is-heart";
+          document.getElementById('bubble-1').className = "bubble bubble-1 is-heart";
+          document.getElementById('bubble-2').className = "bubble bubble-2 is-heart";
+          document.getElementById('bubble-3').className = "bubble bubble-3 is-heart";
+          document.getElementById('bubble-1').innerText = "💝";
+          document.getElementById('bubble-2').innerText = "🌸";
+          document.getElementById('bubble-3').innerText = "✨";
 
           createFloatingCelebrationBubbles();
-
+          toggleCelebrateBtn(); // Sinkronisasi gaya warna tombol pas awal masuk halaman akhir
           switchView('story-view', 'final-view');
-          confetti({ particleCount: 50, spread: 60, origin: { y: 0.8 }, colors: ['#ffdae0', '#e6e6fa'] });
+          confetti({ particleCount: 40, spread: 55, origin: { y: 0.8 }, colors: ['#ffdae0', '#e6e6fa'] });
         }
-      }, 500);
+      }, 400);
     }
 
-    // Create 15 floating celebration bubbles with interactive behavior
     function createFloatingCelebrationBubbles() {
       const existing = document.getElementById('celebration-floating-container');
       if (existing) existing.remove();
@@ -942,12 +1065,9 @@
       const container = document.createElement('div');
       container.id = 'celebration-floating-container';
       container.style.position = 'absolute';
-      container.style.top = '0';
-      container.style.left = '0';
-      container.style.width = '100%';
-      container.style.height = '100%';
-      container.style.pointerEvents = 'none'; 
-      container.style.zIndex = '30';
+      container.style.top = '0'; container.style.left = '0';
+      container.style.width = '100%'; container.style.height = '100%';
+      container.style.pointerEvents = 'none'; container.style.zIndex = '30';
       app.appendChild(container);
 
       const allSources = [];
@@ -958,107 +1078,95 @@
       allSources.forEach((src, idx) => {
         const div = document.createElement('div');
         div.className = 'bubble is-photo';
-        const sizeClass = ['bubble-1','bubble-2','bubble-3'][idx % 3];
-        div.classList.add(sizeClass);
+        div.classList.add(['bubble-1', 'bubble-2', 'bubble-3'][idx % 3]);
         div.id = 'celebration-' + idx;
         div.innerHTML = `<img src="${src}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
-        div.onclick = function() { popBubble(div); };
-        div.onpointerenter = function() { hoverBubble(div); };
-        div.onpointerleave = function() { unhoverBubble(div); };
+        div.onclick = function () { popBubble(div); };
+        div.onpointerenter = function () { hoverBubble(div); };
+        div.onpointerleave = function () { unhoverBubble(div); };
 
         div.style.opacity = '0';
         container.appendChild(div);
 
         setTimeout(() => {
           const appFrame = document.getElementById('app');
-          const boundsX = Math.max(0, appFrame.clientWidth - div.clientWidth);
-          const boundsY = Math.max(0, appFrame.clientHeight - div.clientHeight);
-          const randX = Math.random() * boundsX;
-          const randY = Math.random() * boundsY;
+          const randX = Math.random() * (appFrame.clientWidth - div.clientWidth);
+          const randY = Math.random() * (appFrame.clientHeight - div.clientHeight);
           div.style.transition = 'transform 600ms ease, opacity 300ms ease';
           div.style.transform = `translate(${randX}px, ${randY}px) scale(1)`;
           div.style.opacity = '1';
-          setTimeout(() => animateBubbleRandomly(div), idx * 80);
+          setTimeout(() => animateBubbleRandomly(div), idx * 70);
         }, 50);
       });
     }
 
-    /* --- RESET EXPERIENCE FUNCTION --- */
+    function switchView(fromId, toId, useScreenOpening = false, hasEntranceAnimation = false) {
+      if (useScreenOpening) {
+        let overlays = [];
+        ['top', 'bottom', 'left', 'right'].forEach(side => {
+          let ov = document.createElement('div');
+          ov.className = `screen-overlay-${side}-reverse`;
+          document.body.appendChild(ov);
+          overlays.push(ov);
+        });
+
+        document.getElementById(fromId).classList.remove('active');
+        const toView = document.getElementById(toId);
+        toView.classList.add('active');
+        if (hasEntranceAnimation) toView.classList.add('entrance-zoom-in');
+
+        setTimeout(() => { overlays.forEach(ov => ov.remove()); }, 1000);
+      } else {
+        document.getElementById(fromId).classList.remove('active');
+        setTimeout(() => { document.getElementById(toId).classList.add('active'); }, 400);
+      }
+    }
+
     function resetExperience() {
-      playClick();
-      
-      // Remove the 15 celebration bubbles container
+      clickSfx.play();
+      textFadeTimers.forEach(t => clearTimeout(t));
+
       const celebrationContainer = document.getElementById('celebration-floating-container');
       if (celebrationContainer) celebrationContainer.remove();
 
-      // Clear any custom text styling or grid contents inside the last page if needed
       document.getElementById('celebration-bubbles-container').innerHTML = '';
+      document.getElementById('c3').checked = false; 
 
-      // Reset application timeline states
-      currentStep = 0;
-
-      // Bring back standard heart shapes to global bubbles
       const b1 = document.getElementById('bubble-1');
       const b2 = document.getElementById('bubble-2');
       const b3 = document.getElementById('bubble-3');
-      
       b1.className = "bubble bubble-1 is-heart";
       b2.className = "bubble bubble-2 is-heart";
       b3.className = "bubble bubble-3 is-heart";
-      b1.innerText = "💝";
-      b2.innerText = "💝";
-      b3.innerText = "💝";
+      b1.innerText = "💝"; b2.innerText = "🌸"; b3.innerText = "✨";
 
-      // Restore envelope visual state
       const envelopeWrapper = document.querySelector('.envelope-wrapper');
       envelopeWrapper.classList.remove('zoom-in');
       envelopeWrapper.style.animation = 'float 3s ease-in-out infinite';
 
-      // Reset music volume back to baseline
       music.volume = 1;
-
-      // Remove fading or entrance animation helpers from screens
+      currentStep = 0;
       document.getElementById('story-view').classList.remove('fade-out', 'entrance-zoom-in');
-      
-      // Return cleanly back to the home view
       switchView('final-view', 'landing-view');
     }
 
-    /* --- CELEBRATION EFFECTS --- */
     function triggerExplosion() {
       gendutSfx.currentTime = 0;
       gendutSfx.play();
+      music.volume = 0.15;
 
-      music.volume = 0.1;
-
-      var duration = 4000;
+      var duration = 4500;
       var end = Date.now() + duration;
 
       (function frame() {
-        confetti({
-          particleCount: 6,
-          angle: 60,
-          spread: 60,
-          origin: { x: 0 },
-          colors: ['#ffdae0', '#e6e6fa', '#d4f0ff', '#fff5c2', '#ff9fb2']
-        });
-        confetti({
-          particleCount: 6,
-          angle: 120,
-          spread: 60,
-          origin: { x: 1 },
-          colors: ['#ffdae0', '#e6e6fa', '#d4f0ff', '#fff5c2', '#ff9fb2']
-        });
-
-        if (Date.now() < end) {
-          requestAnimationFrame(frame);
-        }
+        confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ffdae0', '#e6e6fa', '#fff5c2', '#ff9fb2'] });
+        confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ffdae0', '#e6e6fa', '#fff5c2', '#ff9fb2'] });
+        if (Date.now() < end) requestAnimationFrame(frame);
       }());
 
-      setTimeout(() => {
-        music.volume = 1;
-      }, duration + 200);
+      setTimeout(() => { music.volume = 1; }, duration + 200);
     }
   </script>
 </body>
+
 </html>
