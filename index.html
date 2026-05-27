@@ -10,7 +10,6 @@
     href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Pacifico&family=Caveat:wght@700&display=swap"
     rel="stylesheet">
 
-  <!-- Open Graph Meta -->
   <meta property="og:title" content="Happy 27th Birthday Akmalita 🎉" />
   <meta property="og:description" content="A special surprise birthday 💖" />
   <meta property="og:image" content="https://drive.google.com/thumbnail?id=1HsdlY5kqcxNw64jmFvcOLvpuYwbBUulA" />
@@ -611,24 +610,25 @@
       position: fixed; background: linear-gradient(135deg, var(--yellow), var(--lavender)); z-index: 100;
       animation: screenOpenRightReverse 2s ease-out 0.1s forwards; width: 50%; height: 100%; right: 0; top: 0;
     }
+    
+    /* Global safe emoji class fallback */
+    .emoji-fix {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+    }
   </style>
 </head>
 
 <body>
 
-  <!-- Background Music -->
   <audio id="bg-music" loop>
     <source src="https://sinar-utama.com/storage/barang/music_gendut/gendut_music.mp3" type="audio/mpeg">
   </audio>
 
   <div id="app">
-    <!-- Music Toggle -->
     <button id="music-toggle" onclick="toggleMusic()">🎵</button>
 
-    <!-- Background Hearts -->
     <div class="bg-hearts" id="hearts-container"></div>
 
-    <!-- Custom Warning Popup Overlay -->
     <div id="custom-popup" class="popup-overlay">
       <div class="popup-box">
         <p>Kontrak bersama gendutnya di isi dulu dong 🥺👉👈</p>
@@ -636,7 +636,6 @@
       </div>
     </div>
 
-    <!-- Global Interactive Floating Objects -->
     <div id="bubble-1" class="bubble bubble-1 is-heart" onclick="popBubble(this)" onpointerenter="hoverBubble(this)"
       onpointerleave="unhoverBubble(this)">💖</div>
     <div id="bubble-2" class="bubble bubble-2 is-heart" onclick="popBubble(this)" onpointerenter="hoverBubble(this)"
@@ -644,7 +643,6 @@
     <div id="bubble-3" class="bubble bubble-3 is-heart" onclick="popBubble(this)" onpointerenter="hoverBubble(this)"
       onpointerleave="unhoverBubble(this)">✨</div>
 
-    <!-- 1. LANDING PAGE -->
     <div id="landing-view" class="view active">
       <div class="envelope-wrapper"></div>
       <h1>Akmalita Rosyida</h1>
@@ -654,7 +652,6 @@
       <button onclick="startExperience()">Open Invitation 💌</button>
     </div>
 
-    <!-- 2. STORY PAGES -->
     <div id="story-view" class="view">
       <div class="story-container">
         <div class="polaroid-frame" id="p-frame">
@@ -676,7 +673,6 @@
       </div>
     </div>
 
-    <!-- 3. FINAL PAGE -->
     <div id="final-view" class="view">
       <button id="reset-btn" onclick="resetExperience()">🔄</button>
 
@@ -684,7 +680,6 @@
       <h1>Happy 27th Birthday!</h1>
       <p>Akmalita Rosyida<br>28 May 2026</p>
 
-      <!-- Interactive Checklist Widget -->
       <div class="love-widget">
         <div class="widget-title">📌 KONTRAK BERSAMA GENDUT :</div>
         <div class="checkbox-item">
@@ -715,7 +710,6 @@
       </div>
       <div id="celebration-bubbles-container"></div>
       
-      <!-- Tombol Celebrate (Atribut disabled dibuang agar bisa menangkap klik kapan pun) -->
       <button id="celebrate-btn" class="btn-inactive" onclick="handleCelebrateAction()">Celebrate! 🎉</button>
     </div>
 
@@ -727,32 +721,32 @@
     const bubblePopSfx = new Audio("https://cdn.pixabay.com/download/audio/2025/09/18/audio_37de472eec.mp3?filename=dragon-studio-bubble-pop-406640.mp3");
     const gendutSfx = new Audio("https://sinar-utama.com/storage/barang/music_gendut/gendut.mp3");
 
-    /* --- DATA: STORY STEPS --- */
+    /* --- DATA: STORY STEPS WITH SYSTEM FONT WRAPPERS FOR EMOJIS --- */
     const storyData = [
       {
         mainImg: "https://drive.google.com/thumbnail?id=1lnq7P05bsj0qRCWAHTlFbqnyB3BACxkT",
         bubbles: ["https://drive.google.com/thumbnail?id=1eGAqLhlqE6ua7OQeC6Y6oLe-r6cWgbIs", "https://drive.google.com/thumbnail?id=11t6K5x1nl_q8hfnbRFf7uj4dnQeawqwS", "https://drive.google.com/thumbnail?id=1R_OZeoIbtXNpKAU-I2OmbPhb-L-gyz2l"],
-        text: "Gendut Selamat Ulang Tahun yang ke-27 ya🎉<br><br>Semoga disisa umur kamu ini diberi keberkahan dan kemudahan dalam segala urusannya ya dudut✨<br><br> Aku selalu doain supaya semua keinginan kamu diberikan Allah jawaban yang terbaik💙",
+        text: "Gendut Selamat Ulang Tahun yang ke-27 ya <span class='emoji-fix'>🎉</span><br><br>Semoga disisa umur kamu ini diberi keberkahan dan kemudahan dalam segala urusannya ya dudut <span class='emoji-fix'>✨</span><br><br> Aku selalu doain supaya semua keinginan kamu diberikan Allah jawaban yang terbaik <span class='emoji-fix'>💙</span>",
       },
       {
         mainImg: "https://drive.google.com/thumbnail?id=1WZnjHEn3W9cCUaf3EP19HK7bEkq2fYCz",
         bubbles: ["https://drive.google.com/thumbnail?id=1uBw5s9j-qJyslXkhClR9CksmJq_a45yL", "https://drive.google.com/thumbnail?id=15SaeCVowr_CGiZHi3AwaNFcNluf7yAWX", "https://drive.google.com/thumbnail?id=1acEBqYzvLZ0fiX1NHW5A7dX5x_uBFDsu"],
-        text: "Gendut Cantik Banget Sih🥰<br><br>Gendut tau gk kalo senyum kamu tuh manis banget lo, bisa jadi mood booster banget tiap harinya🚀<br><br>Jadi.. Gendut Wajib Selalu Senyum Seneng Bahagia Terus ya dutttt!😊<br><br>Aku berharap gendut selalu dikelilingi kebahagiaan dimanapun kamu berada! 💙"
+        text: "Gendut Cantik Banget Sih <span class='emoji-fix'>🥰</span><br><br>Gendut tau gk kalo senyum kamu tuh manis banget lo, bisa jadi mood booster banget tiap harinya <span class='emoji-fix'>🚀</span><br><br>Jadi.. Gendut Wajib Selalu Senyum Seneng Bahagia Terus ya dutttt! <span class='emoji-fix'>😊</span><br><br>Aku berharap gendut selalu dikelilingi kebahagiaan dimanapun kamu berada! <span class='emoji-fix'>💙</span>"
       },
       {
         mainImg: "https://drive.google.com/thumbnail?id=1HsdlY5kqcxNw64jmFvcOLvpuYwbBUulA",
         bubbles: ["https://drive.google.com/thumbnail?id=1T0iYTGpQX-FPG50bgZn8nHLSGneFdyfX", "https://drive.google.com/thumbnail?id=1iZj4w5LC5BwhsrQING0mqZMYW7Gfm80o", "https://drive.google.com/thumbnail?id=1vN8QkHpA2djjHbyNsU_n1jq68n_bBqky"],
-        text: "Gendut Jangan Pernah Berubah🤗<br><br>Tetep jadi gendut yang baik, perhatian, lucu, gemesin dan yang paling penting gk berlebihan dalam hal apapun☺️<br><br>Cantik banget sih dut kamu nih, mo gimana aja posenya😆 Dari dulu sampe sekarang gumushnya gk pernah berubah🤭"
+        text: "Gendut Jangan Pernah Berubah <span class='emoji-fix'>🤗</span><br><br>Tetep jadi gendut yang baik, perhatian, lucu, gemesin dan yang paling penting gk berlebihan dalam hal apapun <span class='emoji-fix'>☺️</span><br><br>Cantik banget sih dut kamu nih, mo gimana aja posenya <span class='emoji-fix'>😆</span> Dari dulu sampe sekarang gumushnya gk pernah berubah <span class='emoji-fix'>🤭</span>"
       },
       {
         mainImg: "https://drive.google.com/thumbnail?id=1UBa_EvHSQ7hqddDvDD1AFUkwz7ZqG3Q3",
         bubbles: ["https://drive.google.com/thumbnail?id=1AKRAmDp-6gMkTtHRzQVOuzfomyBwrDR0", "https://drive.google.com/thumbnail?id=1c6KDQS8Gu4rPPLObhModHJ-RW6FV4038", "https://drive.google.com/thumbnail?id=1qzDDTDbRg5nD0jhe75zBRmKsNLiK-LGs"],
-        text: "Gendut Baik Banget🥹<br><br>Aku seneng banget kamu udah mau dengerin curhatan aku, iyain buat ketemu lagi, jalan-jalan, terus muncak bareng, sampe mau sama-sama terbuka tentang perasaan kita💕<br><br> It means a lot for me dut, luv luv Love you Gendut😘"
+        text: "Gendut Baik Banget <span class='emoji-fix'>🥹</span><br><br>Aku seneng banget kamu udah mau dengerin curhatan aku, iyain buat ketemu lagi, jalan-jalan, terus muncak bareng, sampe mau sama-sama terbuka tentang perasaan kita <span class='emoji-fix'>💕</span><br><br> It means a lot for me dut, luv luv Love you Gendut <span class='emoji-fix'>😘</span>"
       },
       {
         mainImg: "https://drive.google.com/thumbnail?id=1lqNpqZ5QBMplded0kAJuJVIfLG31zkIr",
         bubbles: ["https://drive.google.com/thumbnail?id=1Jn0soVi_lKE-FphgBzy3kDL2YrygIvjm", "https://drive.google.com/thumbnail?id=1ruc9EMj76N_wl3qL4LWtWWtdP-w8ApPe", "https://drive.google.com/thumbnail?id=1EGNbXlp1gTGMnRcZXpOYfPl2AHubFrdm"],
-        text: "Gendut Makasih Banyak ya🥰<br><br>Makasih bangett gendut udah mau ngambil keputusan buat bareng aku supaya bisa seneng-seneng bahagia bareng🥹<br><br>Semoga kita diberikan hasil yang paling baik dan paling berkah ya dut✨"
+        text: "Gendut Makasih Banyak ya <span class='emoji-fix'>🥰</span><br><br>Makasih bangett gendut udah mau ngambil keputusan buat bareng aku supaya bisa seneng-seneng bahagia bareng <span class='emoji-fix'>🥹</span><br><br>Semoga kita diberikan hasil yang paling baik dan paling berkah ya dut <span class='emoji-fix'>✨</span>"
       }
     ];
 
@@ -901,7 +895,7 @@
       isMusicPlaying = !isMusicPlaying;
     }
 
-    /* --- ADVANCED FADE-IN TEXT ENGINE --- */
+    /* --- UNICODE/EMOJI-SAFE FADE-IN TEXT ENGINE --- */
     function fadeInText(targetElement, fullHtmlText, onCompleteCallback) {
       textFadeTimers.forEach(t => clearTimeout(t));
       textFadeTimers = [];
@@ -909,7 +903,8 @@
 
       document.getElementById('next-btn').disabled = true;
 
-      const regex = /(<[^>]+>|[^<])/g;
+      // Smart Regex pattern that handles HTML structures and complex modern multi-byte Emojis cleanly
+      const regex = /(<[^>]+>|\p{Emoji_Presentation}|\p{Extended_Pictographic}|\s|[^\s<])/gu;
       const tokens = fullHtmlText.match(regex) || [];
       
       let totalLettersCount = 0;
@@ -937,27 +932,24 @@
       textFadeTimers.push(completeTimer);
     }
 
-    /* --- NEW CHECKBOX & CELEBRATE ACTION ENGINE --- */
+    /* --- CHECKBOX & CELEBRATE ACTION ENGINE --- */
     function toggleCelebrateBtn() {
       const isChecked = document.getElementById('c3').checked;
       const celebrateBtn = document.getElementById('celebrate-btn');
       
       if (isChecked) {
-        celebrateBtn.classList.remove('btn-inactive'); // Berubah warna jadi pink aktif
+        celebrateBtn.classList.remove('btn-inactive');
       } else {
-        celebrateBtn.classList.add('btn-inactive');    // Kembali berwarna abu pasif
+        celebrateBtn.classList.add('btn-inactive');
       }
     }
 
-    // Fungsi tunggal pengatur aksi klik tombol celebrate
     function handleCelebrateAction() {
       const isChecked = document.getElementById('c3').checked;
       
       if (!isChecked) {
-        // Jika belum dicentang, langsung panggil pop-up peringatan lucu
         document.getElementById('custom-popup').classList.add('show');
       } else {
-        // Jika sudah dicentang, ledakkan konfeti utama
         triggerExplosion();
       }
     }
@@ -991,6 +983,7 @@
       }, 1400);
     }
 
+    // Rest of your display setup matches structural transitions smoothly
     function updateStoryDOM() {
       const data = storyData[currentStep];
       const mainImgElement = document.getElementById('main-img');
@@ -1047,7 +1040,7 @@
           document.getElementById('bubble-3').innerText = "✨";
 
           createFloatingCelebrationBubbles();
-          toggleCelebrateBtn(); // Sinkronisasi gaya warna tombol pas awal masuk halaman akhir
+          toggleCelebrateBtn(); 
           switchView('story-view', 'final-view');
           confetti({ particleCount: 40, spread: 55, origin: { y: 0.8 }, colors: ['#ffdae0', '#e6e6fa'] });
         }
@@ -1152,14 +1145,11 @@
       gendutSfx.currentTime = 0;
       gendutSfx.play();
 
-      // DETEKSI ENGINE: Cek apakah browser yang dipakai saat ini adalah Safari
       const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
       if (isSafari) {
-        // Jika Safari, kita gunakan trik aman: Mute musik background utama agar tidak bentrok suara
         music.muted = true;
       } else {
-        // Jika Chrome/browser lain, turunkan volume secara mulus ke 0.15 seperti biasa
         music.volume = 0.15;
       }
 
@@ -1172,7 +1162,6 @@
         if (Date.now() < end) requestAnimationFrame(frame);
       }());
 
-      // Kembalikan keadaan audio utama setelah efek suara selesai (4.5 detik)
       setTimeout(() => { 
         if (isSafari) {
           music.muted = false;
