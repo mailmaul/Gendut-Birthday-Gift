@@ -512,9 +512,6 @@
       transform: scale(0.8);
       transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    .popup-overlay.show .popup-box {
-      transform: scale(1);
-    }
     .popup-box p {
       font-size: 1.05rem;
       font-weight: bold;
@@ -1145,6 +1142,7 @@
       envelopeWrapper.style.animation = 'float 3s ease-in-out infinite';
 
       music.volume = 1;
+      music.muted = false;
       currentStep = 0;
       document.getElementById('story-view').classList.remove('fade-out', 'entrance-zoom-in');
       switchView('final-view', 'landing-view');
@@ -1153,7 +1151,17 @@
     function triggerExplosion() {
       gendutSfx.currentTime = 0;
       gendutSfx.play();
-      music.volume = 0.15;
+
+      // DETEKSI ENGINE: Cek apakah browser yang dipakai saat ini adalah Safari
+      const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+      if (isSafari) {
+        // Jika Safari, kita gunakan trik aman: Mute musik background utama agar tidak bentrok suara
+        music.muted = true;
+      } else {
+        // Jika Chrome/browser lain, turunkan volume secara mulus ke 0.15 seperti biasa
+        music.volume = 0.15;
+      }
 
       var duration = 4500;
       var end = Date.now() + duration;
@@ -1164,7 +1172,14 @@
         if (Date.now() < end) requestAnimationFrame(frame);
       }());
 
-      setTimeout(() => { music.volume = 1; }, duration + 200);
+      // Kembalikan keadaan audio utama setelah efek suara selesai (4.5 detik)
+      setTimeout(() => { 
+        if (isSafari) {
+          music.muted = false;
+        } else {
+          music.volume = 1; 
+        }
+      }, duration + 200);
     }
   </script>
 </body>
